@@ -161,9 +161,9 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="text-white font-semibold mb-1">Email</h3>
-                    <a href="mailto:support@majstorija.rs" className="text-gray-300 hover:text-blue-400 transition">
-                      support@majstorija.rs
-                    </a>
+                    <a href="mailto:majstorija.service@yahoo.com" className="text-gray-300 hover:text-blue-400 transition">
+  majstorija.service@yahoo.com
+</a>
                   </div>
                 </div>
 
