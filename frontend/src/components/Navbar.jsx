@@ -28,7 +28,7 @@ export default function Navbar() {
         <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">
           Contact Us
         </Link>
-        <Button type="secondary" btnText="Log In" />
+        <Button type="secondary" btnText="Log In" to="/login" />
       </nav>
 
       {/* Hamburger Button - Mobile */}
@@ -94,7 +94,7 @@ export default function Navbar() {
             Contact Us
           </Link>
           <div className="pt-4">
-            <Button type="secondary" btnText="Log In" />
+            <Button type="secondary" btnText="Log In" to="/login" />
           </div>
         </nav>
       </div>

@@ -17,7 +17,7 @@ export default function Main() {
               Building trust between neighbors by making local services simple, transparent, and reliable.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Button type="primary" btnText="Get Started" />
+              <Button type="primary" btnText="Get Started" to="/browse-tasks" />
               <Button type="terciary" btnText="Learn More" />
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function Main() {
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Join thousands of satisfied customers who trust Majstorija for their home service needs.
           </p>
-          <Button type="primary" btnText="Sign Up Now" />
+          <Button type="primary" btnText="Sign Up Now" to='/register' />
         </div>
       </div>
     </main>
