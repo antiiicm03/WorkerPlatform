@@ -10,7 +10,7 @@ import {
   Tv,
   Car
 } from 'lucide-react';
-import majstorijaLogoMain from "../assets/majstorijaLogoMain.png";
+import Header from "./Header";
 
 const BrowseTasks = () => {
   const categories = [
@@ -81,34 +81,7 @@ const BrowseTasks = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
-      
-      <header className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link to="/">
-              <img 
-                src={majstorijaLogoMain} 
-                alt="Majstorija Logo" 
-                className="max-w-[150px] md:max-w-[200px] hover:opacity-90 transition-opacity" 
-              />
-            </Link>
-            <div className="flex items-center gap-4">
-              <Link 
-                to="/" 
-                className="text-gray-300 hover:text-white font-medium transition-colors"
-              >
-                Back to Home
-              </Link>
-              <Link
-                to="/login"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition font-semibold"
-              >
-                Log In
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       
       <div className="flex-1 px-4 sm:px-6 lg:px-8 py-16">

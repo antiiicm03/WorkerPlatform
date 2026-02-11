@@ -18,7 +18,7 @@ export default function Main() {
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
               <Button type="primary" btnText="Get Started" to="/browse-tasks" />
-              <Button type="terciary" btnText="Learn More" />
+              <Button type="terciary" btnText="Learn More" to="/about" />
             </div>
           </div>
 

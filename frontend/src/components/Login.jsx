@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import majstorijaLogoMain from "../assets/majstorijaLogoMain.png";
+import Header from "./Header";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,26 +26,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
-      
-      <header className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link to="/">
-              <img 
-                src={majstorijaLogoMain} 
-                alt="Majstorija Logo" 
-                className="max-w-[150px] md:max-w-[200px] hover:opacity-90 transition-opacity" 
-              />
-            </Link>
-            <Link 
-              to="/" 
-              className="text-gray-300 hover:text-white font-medium transition-colors"
-            >
-              Back to Home
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">

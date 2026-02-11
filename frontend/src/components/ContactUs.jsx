@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import majstorijaLogoMain from "../assets/majstorijaLogoMain.png";
+import Header from "./Header";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +20,6 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // ovde backend logika kasnije
     console.log('Form submitted:', formData);
     alert('Message sent! (Backend not yet connected)');
   };
@@ -33,30 +32,7 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-      
-      <nav className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/">
-              <img 
-                src={majstorijaLogoMain} 
-                alt="Majstorija Logo" 
-                className="max-w-[150px] md:max-w-[200px] hover:opacity-90 transition-opacity" 
-              />
-            </Link>
-            <div className="hidden md:flex space-x-8">
-              <Link to="/" className="text-gray-300 hover:text-white transition">Home</Link>
-              <Link to="/about" className="text-gray-300 hover:text-white transition">About Us</Link>
-              <Link to="/users" className="text-gray-300 hover:text-white transition">For Users</Link>
-              <Link to="/workers" className="text-gray-300 hover:text-white transition">For Workers</Link>
-              <Link to="/contact" className="text-blue-400 hover:text-blue-300 transition">Contact Us</Link>
-            </div>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
-              Log In
-            </button>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -162,8 +138,8 @@ const ContactUs = () => {
                   <div>
                     <h3 className="text-white font-semibold mb-1">Email</h3>
                     <a href="mailto:majstorija.service@yahoo.com" className="text-gray-300 hover:text-blue-400 transition">
-  majstorija.service@yahoo.com
-</a>
+                      majstorija.service@yahoo.com
+                    </a>
                   </div>
                 </div>
 
@@ -238,13 +214,12 @@ const ContactUs = () => {
           <h2 className="text-2xl font-bold text-white mb-6 text-center">Find Us</h2>
           <div className="w-full h-96 bg-gray-700 rounded-xl flex items-center justify-center">
             <p className="text-gray-400">
-              🗺️ Google Maps will be added here later
+              
             </p>
           </div>
         </div>
       </div>
 
-      {/* Futer */}
       <footer className="bg-gray-900/80 border-t border-gray-700 py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
           <p>© 2026 Majstorija. All rights reserved.</p>

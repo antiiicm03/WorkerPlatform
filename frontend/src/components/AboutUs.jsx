@@ -1,37 +1,13 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle, Users, Wrench, MessageCircle } from 'lucide-react';
-import majstorijaLogoMain from "../assets/majstorijaLogoMain.png";
+import Header from "./Header";
 
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-    
-      <nav className="bg-gray-900/50 backdrop-blur-sm border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/">
-              <img 
-                src={majstorijaLogoMain} 
-                alt="Majstorija Logo" 
-                className="max-w-[150px] md:max-w-[200px] hover:opacity-90 transition-opacity" 
-              />
-            </Link>
-            <div className="hidden md:flex space-x-8">
-              <Link to="/" className="text-gray-300 hover:text-white transition">Home</Link>
-              <Link to="/about" className="text-blue-400 hover:text-blue-300 transition">About Us</Link>
-              <Link to="/users" className="text-gray-300 hover:text-white transition">For Users</Link>
-              <Link to="/workers" className="text-gray-300 hover:text-white transition">For Workers</Link>
-              <Link to="/contact" className="text-gray-300 hover:text-white transition">Contact Us</Link>
-            </div>
-            <Link to="/login">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
-                Log In
-              </button>
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Header />
 
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         
         <div className="text-center mb-16">
@@ -43,6 +19,7 @@ const AboutUs = () => {
           </p>
         </div>
 
+        
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-gray-700 mb-12">
           <h2 className="text-3xl font-bold text-white mb-6">Our Story</h2>
           <p className="text-gray-300 leading-relaxed mb-4">
@@ -53,7 +30,7 @@ const AboutUs = () => {
           </p>
         </div>
 
-      
+       
         <div className="mb-12">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">What We Do</h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -115,7 +92,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-     
+       
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-gray-700 mb-12">
           <h2 className="text-3xl font-bold text-white mb-6 text-center">Who Is Majstorija For?</h2>
           <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-8">
@@ -149,7 +126,7 @@ const AboutUs = () => {
           </div>
         </div>
 
-        
+       
         <div className="bg-gradient-to-r from-blue-600/20 to-blue-800/20 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-blue-500/30 text-center">
           <MessageCircle className="w-16 h-16 text-blue-400 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-white mb-4">
@@ -166,7 +143,7 @@ const AboutUs = () => {
         </div>
       </div>
 
-     
+      
       <footer className="bg-gray-900/80 border-t border-gray-700 py-8 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
           <p>© 2026 Majstorija. All rights reserved.</p>
