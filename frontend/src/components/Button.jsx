@@ -1,23 +1,29 @@
-import Lottie from "lottie-react";
-import arrowRight from "../assets/lottie/arrowRight.json";
+import { Link } from "react-router-dom";
 
-export default function Button({type, btnText}) {
-    if (type==="primary") {
-        return (
-            <button className="px-5 py-2 bg-[#2324fe] text-center text-white">{btnText}</button>
-        );
-    }
-    else if (type==="secondary") {
-        return (
-            <button className="px-5 py-2 bg-transparent text-center text-white border-[1px] border-[#3b3c40]">{btnText}</button>
-        );
-    }
-    else if (type==="terciary") {
-        return (
-            <div className="wrap flex items-center justify-center">
-                <Lottie animationData={arrowRight} loop={true} className="w-[40px]"></Lottie>
-                <button className="bg-transparent text-center text-white">{btnText}</button>
-            </div>
-        );
-    }
+export default function Button({ type, btnText, to }) {
+  if (type === "primary") {
+    return (
+      <Link to={to || "/"}>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-all transform hover:scale-105">
+          {btnText}
+        </button>
+      </Link>
+    );
+  } else if (type === "secondary") {
+    return (
+      <Link to={to || "/"}>
+        <button className="bg-transparent border-2 border-blue-600 hover:bg-blue-600 text-white font-semibold px-8 py-3 rounded-lg transition-all transform hover:scale-105">
+          {btnText}
+        </button>
+      </Link>
+    );
+  } else if (type === "terciary") {
+    return (
+      <Link to={to || "/"}>
+        <button className="bg-gray-700 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded-lg transition-all transform hover:scale-105">
+          {btnText}
+        </button>
+      </Link>
+    );
+  }
 }

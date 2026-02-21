@@ -8,28 +8,14 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <div className="bg-[#121418] min-h-screen flex flex-col">
-      <Header>
-
-      </Header>
-      <Main>
-
-      </Main>
-      <WorkWithUs>
-        
-      </WorkWithUs>
-      <Verified>
-
-      </Verified>
-      <Summary>
-
-      </Summary>
-      <Services>
-
-      </Services>
-      <Footer>
-
-      </Footer>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
+      <Header />
+      <Main />
+      <WorkWithUs />
+      <Verified />
+      <Summary />
+      <Services />
+      <Footer />
     </div>
   );
 }

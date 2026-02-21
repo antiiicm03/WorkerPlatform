@@ -1,67 +1,113 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../components/Button";
 
 export default function Navbar() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-    return (
-        <>
-            {/* Desktop Navbar - hidden on mobile, visible from md: up */}
-            <nav className="hidden md:flex gap-8 items-center">
-                <a className="text-white hover:text-gray-200 cursor-pointer">Home</a>
-                <a className="text-white hover:text-gray-200 cursor-pointer">About Us</a>
-                <a className="text-white hover:text-gray-200 cursor-pointer">For Users</a>
-                <a className="text-white hover:text-gray-200 cursor-pointer">For Workers</a>
-                <a className="text-white hover:text-gray-200 cursor-pointer">Contact Us</a>
-                <Button type="secondary" btnText="Log In" />
-            </nav>
+  return (
+    <>
+      {/* Desktop Navbar */}
+      <nav className="hidden md:flex gap-8 items-center">
+        <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">
+          Home
+        </Link>
+        <Link to="/about" className="text-gray-300 hover:text-white font-medium transition-colors">
+          About Us
+        </Link>
+        <Link to="/users" className="text-gray-300 hover:text-white font-medium transition-colors">
+          For Users
+        </Link>
+        <Link to="/workers" className="text-gray-300 hover:text-white font-medium transition-colors">
+          For Workers
+        </Link>
+        <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">
+          Contact Us
+        </Link>
+        <Button type="secondary" btnText="Log In" to="/login" />
+        <Button type="primary" btnText="Sign Up" to="/register" />
+      </nav>
 
-            {/* Hamburger Button - visible on mobile, hidden from md: up */}
-            <button 
-                className="md:hidden text-white z-50"
-                onClick={toggleMenu}
-                aria-label="Toggle menu"
-            >
-                {!isMenuOpen ? (
-                    // Hamburger Icon
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                ) : (
-                    // Close Icon
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                )}
-            </button>
+      {/* Hamburger Button - Mobile */}
+      <button
+        className="md:hidden text-white z-50 p-2 hover:bg-gray-800/50 rounded-lg transition"
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        {!isMenuOpen ? (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        ) : (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        )}
+      </button>
 
-            {/* Mobile Menu - slides in from right */}
-            <div className={`
-                fixed top-0 right-0 h-full w-64 bg-[#1a1f2e] transform transition-transform duration-300 ease-in-out z-40
-                ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-                md:hidden
-            `}>
-                <nav className="flex flex-col gap-6 p-8 pt-24">
-                    <a className="text-white hover:text-gray-200 cursor-pointer text-lg">Home</a>
-                    <a className="text-white hover:text-gray-200 cursor-pointer text-lg">About Us</a>
-                    <a className="text-white hover:text-gray-200 cursor-pointer text-lg">For Users</a>
-                    <a className="text-white hover:text-gray-200 cursor-pointer text-lg">For Workers</a>
-                    <a className="text-white hover:text-gray-200 cursor-pointer text-lg">Contact Us</a>
-                    <Button type="secondary" btnText="Log In" />
-                </nav>
-            </div>
+      {/* Mobile Menu */}
+      <div
+        className={`
+          fixed top-0 right-0 h-full w-72 bg-gray-900/95 backdrop-blur-lg border-l border-gray-700
+          transform transition-transform duration-300 ease-in-out z-40
+          ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
+          md:hidden
+        `}
+      >
+        <nav className="flex flex-col gap-6 p-8 pt-24">
+          <Link
+            to="/"
+            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
+            onClick={toggleMenu}
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
+            onClick={toggleMenu}
+          >
+            About Us
+          </Link>
+          <Link
+            to="/users"
+            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
+            onClick={toggleMenu}
+          >
+            For Users
+          </Link>
+          <Link
+            to="/workers"
+            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
+            onClick={toggleMenu}
+          >
+            For Workers
+          </Link>
+          <Link
+            to="/contact"
+            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
+            onClick={toggleMenu}
+          >
+            Contact Us
+          </Link>
+          <div className="pt-4">
+            <Button type="secondary" btnText="Log In" to="/login" />
+            <Button type="primary" btnText="Sign Up" to="/register" />
+          </div>
+        </nav>
+      </div>
 
-            {/* Overlay - darkens background when menu is open */}
-            {isMenuOpen && (
-                <div 
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
-                    onClick={toggleMenu}
-                />
-            )}
-        </>
-    );
+      
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
+          onClick={toggleMenu}
+        />
+      )}
+    </>
+  );
 }
