@@ -16,39 +16,6 @@ namespace WebProdavnica.API.Controllers
             _userService = userService;
         }
 
-        // POST: api/users/register
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] User user)
-        {
-            try
-            {
-                bool success = _userService.Add(user);
-
-                if (success)
-                {
-                    return Ok(new
-                    {
-                        success = true,
-                        message = "Korisnik uspešno registrovan!"
-                    });
-                }
-
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Registracija nije uspela"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    error = ex.Message
-                });
-            }
-        }
-
         // GET: api/users
         [HttpGet]
         public IActionResult GetAll()

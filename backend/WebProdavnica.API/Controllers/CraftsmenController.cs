@@ -16,43 +16,6 @@ namespace WebProdavnica.API.Controllers
             _craftsmanService = craftsmanService;
         }
 
-        // POST: api/craftsmen
-        [HttpPost]
-        public IActionResult Create([FromBody] Craftsman craftsman)
-        {
-            try
-            {
-                bool success = _craftsmanService.Add(craftsman);
-
-                if (success)
-                {
-                    return CreatedAtAction(
-                        nameof(GetById),
-                        new { id = craftsman.CraftsmanId },
-                        new
-                        {
-                            success = true,
-                            message = "Zanatlija uspešno dodat!",
-                            data = craftsman
-                        });
-                }
-
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Dodavanje nije uspelo"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    error = ex.Message
-                });
-            }
-        }
-
         // GET: api/craftsmen
         [HttpGet]
         public IActionResult GetAll()
