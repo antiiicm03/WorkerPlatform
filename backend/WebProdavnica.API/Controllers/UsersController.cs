@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProdavnica.BusinessLayer;
+using WebProdavnica.BusinessLayer.Abstract;
+using WebProdavnica.BusinessLayer.Impl;
 using WebProdavnica.Entities;
 
 namespace WebProdavnica.API.Controllers
@@ -8,9 +9,9 @@ namespace WebProdavnica.API.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
 
-        public UsersController(UserService userService)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
         }

@@ -19,8 +19,9 @@ namespace WebProdavnica.DAL.Impl
 
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"INSERT INTO dbo.craftsmen
-            (first_name,last_name,email,phone,location,profession,experience,hourly_rate,working_hours,average_rating)
-            VALUES(@fn,@ln,@e,@p,@l,@pr,@ex,@hr,@wh,@ar)";
+                (first_name, last_name, email, phone, location, profession, 
+                experience, hourly_rate, working_hours, average_rating, password_hash)
+                VALUES(@fn, @ln, @e, @p, @l, @pr, @ex, @hr, @wh, @ar, @ph)";
 
             cmd.Parameters.AddWithValue("@fn", c.FirstName);
             cmd.Parameters.AddWithValue("@ln", c.LastName);
@@ -31,7 +32,8 @@ namespace WebProdavnica.DAL.Impl
             cmd.Parameters.AddWithValue("@ex", c.Experience);
             cmd.Parameters.AddWithValue("@hr", c.HourlyRate);
             cmd.Parameters.AddWithValue("@wh", c.WorkingHours);
-            cmd.Parameters.AddWithValue("@ar", c.AverageRating);
+            cmd.Parameters.AddWithValue("@ar", (object?)c.AverageRating ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@ph", (object?)c.PasswordHash ?? DBNull.Value);
 
             return cmd.ExecuteNonQuery() > 0;
         }
@@ -46,32 +48,22 @@ namespace WebProdavnica.DAL.Impl
             return cmd.ExecuteNonQuery() > 0;
         }
 
-        public Craftsman Get(int id)
+        public Craftsman? Get(int id)
         {
             using SqlConnection conn = new(DataBaseConstant.ConnectionString);
             conn.Open();
 
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM dbo.craftsmen WHERE craftsman_id=@id";
+            cmd.CommandText = @"SELECT craftsman_id, first_name, last_name, email, phone, 
+                                location, profession, experience, hourly_rate, working_hours, 
+                                average_rating, password_hash, refresh_token, refresh_token_expiry 
+                                FROM dbo.craftsmen WHERE craftsman_id=@id";
             cmd.Parameters.AddWithValue("@id", id);
 
             SqlDataReader r = cmd.ExecuteReader();
             if (!r.Read()) return null;
 
-            return new Craftsman
-            {
-                CraftsmanId = r.GetInt32(0),
-                FirstName = r.GetString(1),
-                LastName = r.GetString(2),
-                Email = r.GetString(3),
-                Phone = r.GetString(4),
-                Location = r.GetString(5),
-                Profession = r.GetString(6),
-                Experience = r.GetInt32(7),
-                HourlyRate = r.GetDecimal(8),
-                WorkingHours = r.GetString(9),
-                AverageRating = r.GetDecimal(10)
-            };
+            return MapCraftsman(r);
         }
 
         public List<Craftsman> GetAll()
@@ -81,27 +73,34 @@ namespace WebProdavnica.DAL.Impl
             conn.Open();
 
             SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM dbo.craftsmen";
+            cmd.CommandText = @"SELECT craftsman_id, first_name, last_name, email, phone, 
+                                location, profession, experience, hourly_rate, working_hours, 
+                                average_rating, password_hash, refresh_token, refresh_token_expiry 
+                                FROM dbo.craftsmen";
             SqlDataReader r = cmd.ExecuteReader();
 
             while (r.Read())
-            {
-                list.Add(new Craftsman
-                {
-                    CraftsmanId = r.GetInt32(0),
-                    FirstName = r.GetString(1),
-                    LastName = r.GetString(2),
-                    Email = r.GetString(3),
-                    Phone = r.GetString(4),
-                    Location = r.GetString(5),
-                    Profession = r.GetString(6),
-                    Experience = r.GetInt32(7),
-                    HourlyRate = r.GetDecimal(8),
-                    WorkingHours = r.GetString(9),
-                    AverageRating = r.GetDecimal(10)
-                });
-            }
+                list.Add(MapCraftsman(r));
+
             return list;
+        }
+
+        public Craftsman? GetByEmail(string email)
+        {
+            using SqlConnection conn = new(DataBaseConstant.ConnectionString);
+            conn.Open();
+
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"SELECT craftsman_id, first_name, last_name, email, phone, 
+                                location, profession, experience, hourly_rate, working_hours, 
+                                average_rating, password_hash, refresh_token, refresh_token_expiry 
+                                FROM dbo.craftsmen WHERE email=@email";
+            cmd.Parameters.AddWithValue("@email", email);
+
+            SqlDataReader r = cmd.ExecuteReader();
+            if (!r.Read()) return null;
+
+            return MapCraftsman(r);
         }
 
         public bool Update(Craftsman c)
@@ -111,8 +110,10 @@ namespace WebProdavnica.DAL.Impl
 
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"UPDATE dbo.craftsmen SET
-                first_name=@fn,last_name=@ln,email=@e,phone=@p,location=@l,
-                profession=@pr,experience=@ex,hourly_rate=@hr,working_hours=@wh,average_rating=@ar
+                first_name=@fn, last_name=@ln, email=@e, phone=@p, location=@l,
+                profession=@pr, experience=@ex, hourly_rate=@hr, working_hours=@wh, 
+                average_rating=@ar, password_hash=@ph,
+                refresh_token=@rt, refresh_token_expiry=@rte
                 WHERE craftsman_id=@id";
 
             cmd.Parameters.AddWithValue("@id", c.CraftsmanId);
@@ -125,9 +126,33 @@ namespace WebProdavnica.DAL.Impl
             cmd.Parameters.AddWithValue("@ex", c.Experience);
             cmd.Parameters.AddWithValue("@hr", c.HourlyRate);
             cmd.Parameters.AddWithValue("@wh", c.WorkingHours);
-            cmd.Parameters.AddWithValue("@ar", c.AverageRating);
+            cmd.Parameters.AddWithValue("@ar", (object?)c.AverageRating ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@ph", (object?)c.PasswordHash ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@rt", (object?)c.RefreshToken ?? DBNull.Value);
+            cmd.Parameters.AddWithValue("@rte", (object?)c.RefreshTokenExpiry ?? DBNull.Value);
 
             return cmd.ExecuteNonQuery() > 0;
+        }
+
+        private Craftsman MapCraftsman(SqlDataReader r)
+        {
+            return new Craftsman
+            {
+                CraftsmanId = r.GetInt32(0),
+                FirstName = r.GetString(1),
+                LastName = r.GetString(2),
+                Email = r.GetString(3),
+                Phone = r.GetString(4),
+                Location = r.GetString(5),
+                Profession = r.GetString(6),
+                Experience = r.GetInt32(7),
+                HourlyRate = r.GetDecimal(8),
+                WorkingHours = r.GetString(9),
+                AverageRating = r.IsDBNull(10) ? null : r.GetDecimal(10),
+                PasswordHash = r.IsDBNull(11) ? null : r.GetString(11),
+                RefreshToken = r.IsDBNull(12) ? null : r.GetString(12),
+                RefreshTokenExpiry = r.IsDBNull(13) ? null : r.GetDateTime(13)
+            };
         }
     }
 }

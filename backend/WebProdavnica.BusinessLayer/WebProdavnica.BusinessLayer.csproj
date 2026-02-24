@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WebProdavnica.Core\WebProdavnica.Core.csproj" />
+    <ProjectReference Include="..\WebProdavnica.DAL\WebProdavnica.DAL.csproj" />
     <ProjectReference Include="..\WebProdavnica.Entities\WebProdavnica.Entities.csproj" />
   </ItemGroup>
 

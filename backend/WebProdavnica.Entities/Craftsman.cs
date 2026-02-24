@@ -19,8 +19,11 @@ namespace WebProdavnica.Entities
         public decimal HourlyRate { get; set; }
         public string WorkingHours { get; set; }
         public decimal? AverageRating { get; set; }
+        public string? PasswordHash { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime? RefreshTokenExpiry { get; set; }
 
-        
+
         public ICollection<JobOrder> JobOrders { get; set; } = new List<JobOrder>();
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
     }

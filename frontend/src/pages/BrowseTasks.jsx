@@ -18,6 +18,7 @@ const BrowseTasks = () => {
     {
       id: 1,
       name: 'Plumbers',
+      slug: 'plumbers',
       icon: Droplets,
       description: 'Pipe repairs, installations, and leak fixes',
       color: 'from-blue-500 to-cyan-500'
@@ -25,6 +26,7 @@ const BrowseTasks = () => {
     {
       id: 2,
       name: 'Electricians',
+      slug: 'electricians',
       icon: Zap,
       description: 'Electrical repairs, wiring, and installations',
       color: 'from-yellow-500 to-orange-500'
@@ -32,6 +34,7 @@ const BrowseTasks = () => {
     {
       id: 3,
       name: 'Handymen',
+      slug: 'handymen',
       icon: Hammer,
       description: 'General repairs and home maintenance',
       color: 'from-purple-500 to-pink-500'
@@ -39,6 +42,7 @@ const BrowseTasks = () => {
     {
       id: 4,
       name: 'Furniture Assembly',
+      slug: 'furniture-assembly',
       icon: Armchair,
       description: 'Assemble and install furniture',
       color: 'from-green-500 to-emerald-500'
@@ -46,6 +50,7 @@ const BrowseTasks = () => {
     {
       id: 5,
       name: 'Air Conditioning',
+      slug: 'air-conditioning',
       icon: Wind,
       description: 'AC repair, installation, and maintenance',
       color: 'from-cyan-500 to-blue-500'
@@ -53,6 +58,7 @@ const BrowseTasks = () => {
     {
       id: 6,
       name: 'Painters',
+      slug: 'painters',
       icon: PaintBucket,
       description: 'Interior and exterior painting services',
       color: 'from-red-500 to-pink-500'
@@ -60,6 +66,7 @@ const BrowseTasks = () => {
     {
       id: 7,
       name: 'TV Mounting',
+      slug: 'tv-mounting',
       icon: Tv,
       description: 'Professional TV installation and mounting',
       color: 'from-indigo-500 to-purple-500'
@@ -67,6 +74,7 @@ const BrowseTasks = () => {
     {
       id: 8,
       name: 'Auto Mechanics',
+      slug: 'auto-mechanics',
       icon: Car,
       description: 'Vehicle repairs and maintenance',
       color: 'from-gray-600 to-gray-800'
@@ -74,6 +82,7 @@ const BrowseTasks = () => {
     {
       id: 9,
       name: 'General Help',
+      slug: 'general-help',
       icon: Wrench,
       description: 'Various home and office tasks',
       color: 'from-blue-600 to-indigo-600'
@@ -84,10 +93,8 @@ const BrowseTasks = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
       <Header />
 
-      
       <div className="flex-1 px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-7xl mx-auto">
-         
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
               Book Trusted Help for Home Tasks
@@ -95,8 +102,7 @@ const BrowseTasks = () => {
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
               Post any task. Pick the best person. Get it done.
             </p>
-            
-            
+
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 to="/register"
@@ -113,7 +119,7 @@ const BrowseTasks = () => {
             </div>
           </div>
 
-          
+          {/* Category Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {categories.map((category) => {
               const IconComponent = category.icon;
@@ -122,22 +128,20 @@ const BrowseTasks = () => {
                   key={category.id}
                   className="group bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:transform hover:scale-105 cursor-pointer"
                 >
-                  
                   <div className={`w-20 h-20 bg-gradient-to-br ${category.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg`}>
                     <IconComponent className="w-10 h-10 text-white" />
                   </div>
-                  
-                  
+
                   <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
                     {category.name}
                   </h3>
                   <p className="text-gray-300 leading-relaxed mb-6">
                     {category.description}
                   </p>
-                  
+
                   
                   <Link
-                    to="/register"
+                    to={`/craftsmen/${category.slug}`}
                     className="inline-block bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white font-semibold px-6 py-2 rounded-lg transition-all border border-blue-500/30 hover:border-blue-500"
                   >
                     Hire Tasker
@@ -147,7 +151,7 @@ const BrowseTasks = () => {
             })}
           </div>
 
-          
+          {/* Stats */}
           <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-2xl p-12 border border-blue-500/30">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
@@ -165,7 +169,7 @@ const BrowseTasks = () => {
             </div>
           </div>
 
-          
+          {/* How It Works */}
           <div className="mt-24">
             <h2 className="text-4xl font-bold text-white text-center mb-12">
               How It Works
@@ -203,7 +207,6 @@ const BrowseTasks = () => {
         </div>
       </div>
 
-      
       <Footer />
     </div>
   );
