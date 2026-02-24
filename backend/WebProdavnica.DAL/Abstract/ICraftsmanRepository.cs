@@ -14,5 +14,7 @@ namespace WebProdavnica.DAL.Abstract
         bool Delete(int id);
         Craftsman Get(int id);
         List<Craftsman> GetAll();
+
+        Craftsman? GetByEmail(string email);
     }
 }

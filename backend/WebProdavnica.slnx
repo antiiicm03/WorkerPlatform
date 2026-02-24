@@ -9,5 +9,4 @@
   <Project Path="WebProdavnica.Entities/WebProdavnica.Entities.csproj" />
   <Project Path="WebProdavnica.TestConsole/WebProdavnica.TestConsole.csproj" />
   <Project Path="WebProdavnica.UnitTest/WebProdavnica.UnitTest.csproj" />
-  <Project Path="WebProdavnica.WebApp/WebProdavnica.WebApp.csproj" />
 </Solution>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProdavnica.BusinessLayer;
+using WebProdavnica.BusinessLayer.Abstract;
+using WebProdavnica.BusinessLayer.Impl;
 using WebProdavnica.Entities;
 
 namespace WebProdavnica.API.Controllers
@@ -8,9 +9,9 @@ namespace WebProdavnica.API.Controllers
     [Route("api/[controller]")]
     public class ReviewsController : ControllerBase
     {
-        private readonly ReviewService _reviewService;
+        private readonly IReviewService _reviewService;
 
-        public ReviewsController(ReviewService reviewService)
+        public ReviewsController(IReviewService reviewService)
         {
             _reviewService = reviewService;
         }

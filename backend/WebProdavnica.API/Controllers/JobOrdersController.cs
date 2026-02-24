@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProdavnica.BusinessLayer;
+using WebProdavnica.BusinessLayer.Abstract;
+using WebProdavnica.BusinessLayer.Impl;
 using WebProdavnica.Entities;
 
 namespace WebProdavnica.API.Controllers
@@ -8,9 +9,9 @@ namespace WebProdavnica.API.Controllers
     [Route("api/[controller]")]
     public class JobOrdersController : ControllerBase
     {
-        private readonly JobOrderService _jobOrderService;
+        private readonly IJobOrderService _jobOrderService;
 
-        public JobOrdersController(JobOrderService jobOrderService)
+        public JobOrdersController(IJobOrderService jobOrderService)
         {
             _jobOrderService = jobOrderService;
         }
