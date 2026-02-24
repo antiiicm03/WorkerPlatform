@@ -1,35 +1,159 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { User, LogOut, Settings, ChevronDown, MessageSquare, ClipboardList } from "lucide-react";
 import Button from "../components/Button";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  // Čitamo podatke iz localStorage
+  const token = localStorage.getItem('accessToken');
+  const fullName = localStorage.getItem('fullName');
+  const role = localStorage.getItem('role');
+  const email = localStorage.getItem('email');
+  const isLoggedIn = !!token;
+  const isCraftsman = role === 'Craftsman';
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  // Zatvaramo dropdown kada se klikne van njega
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
+    localStorage.removeItem('fullName');
+    localStorage.removeItem('email');
+    setIsDropdownOpen(false);
+    navigate('/');
+    window.location.reload();
   };
+
+  // Inicijali za avatar
+  const initials = fullName
+    ? fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : '?';
 
   return (
     <>
       {/* Desktop Navbar */}
       <nav className="hidden md:flex gap-8 items-center">
-        <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">
-          Home
-        </Link>
-        <Link to="/about" className="text-gray-300 hover:text-white font-medium transition-colors">
-          About Us
-        </Link>
-        <Link to="/users" className="text-gray-300 hover:text-white font-medium transition-colors">
-          For Users
-        </Link>
-        <Link to="/workers/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">
-          For Workers
-        </Link>
-        <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">
-          Contact Us
-        </Link>
-        <Button type="secondary" btnText="Log In" to="/login" />
-        <Button type="primary" btnText="Sign Up" to="/register" />
+        <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">Home</Link>
+        <Link to="/about" className="text-gray-300 hover:text-white font-medium transition-colors">About Us</Link>
+        <Link to="/users" className="text-gray-300 hover:text-white font-medium transition-colors">For Users</Link>
+        <Link to="/workers/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">For Workers</Link>
+        <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">Contact Us</Link>
+
+        {isLoggedIn ? (
+          /* User Avatar + Dropdown */
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 border border-gray-600 rounded-full pl-1 pr-3 py-1 transition"
+            >
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+                {initials}
+              </div>
+              <span className="text-white text-sm font-medium max-w-[120px] truncate">{fullName}</span>
+              <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-56 bg-gray-800 border border-gray-700 rounded-xl shadow-xl z-50 overflow-hidden">
+                {/* User info */}
+                <div className="px-4 py-3 border-b border-gray-700">
+                  <p className="text-white font-semibold text-sm truncate">{fullName}</p>
+                  <p className="text-gray-400 text-xs truncate">{email}</p>
+                  <span className="inline-block mt-1 text-xs px-2 py-0.5 rounded-full bg-blue-600/20 text-blue-400 font-medium">
+                    {isCraftsman ? 'Majstor' : 'Korisnik'}
+                  </span>
+                </div>
+
+                {/* Menu opcije */}
+                <div className="py-1">
+                  {isCraftsman ? (
+                    <>
+                      <Link
+                        to="/workers/dashboard"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm"
+                      >
+                        <ClipboardList className="w-4 h-4" />
+                        Dashboard
+                      </Link>
+                      <Link
+                        to="/workers/chat"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm"
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                        Poruke
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/my-orders"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm"
+                      >
+                        <ClipboardList className="w-4 h-4" />
+                        Moje porudžbine
+                      </Link>
+                      <Link
+                        to="/workers/chat"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm"
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                        Poruke
+                      </Link>
+                    </>
+                  )}
+                  <Link
+                    to="/profile/settings"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm"
+                  >
+                    <Settings className="w-4 h-4" />
+                    Podešavanja naloga
+                  </Link>
+                </div>
+
+                {/* Logout */}
+                <div className="border-t border-gray-700 py-1">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-red-400 hover:text-red-300 hover:bg-gray-700 transition text-sm"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Odjavi se
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* Login / Register dugmad */
+          <>
+            <Button type="secondary" btnText="Log In" to="/login" />
+            <Button type="primary" btnText="Sign Up" to="/register" />
+          </>
+        )}
       </nav>
 
       {/* Hamburger Button - Mobile */}
@@ -50,63 +174,46 @@ export default function Navbar() {
       </button>
 
       {/* Mobile Menu */}
-      <div
-        className={`
-          fixed top-0 right-0 h-full w-72 bg-gray-900/95 backdrop-blur-lg border-l border-gray-700
-          transform transition-transform duration-300 ease-in-out z-40
-          ${isMenuOpen ? "translate-x-0" : "translate-x-full"}
-          md:hidden
-        `}
-      >
+      <div className={`fixed top-0 right-0 h-full w-72 bg-gray-900/95 backdrop-blur-lg border-l border-gray-700 transform transition-transform duration-300 ease-in-out z-40 ${isMenuOpen ? "translate-x-0" : "translate-x-full"} md:hidden`}>
         <nav className="flex flex-col gap-6 p-8 pt-24">
-          <Link
-            to="/"
-            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
-            onClick={toggleMenu}
-          >
-            Home
-          </Link>
-          <Link
-            to="/about"
-            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
-            onClick={toggleMenu}
-          >
-            About Us
-          </Link>
-          <Link
-            to="/users"
-            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
-            onClick={toggleMenu}
-          >
-            For Users
-          </Link>
-          <Link
-            to="/workers"
-            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
-            onClick={toggleMenu}
-          >
-            For Workers
-          </Link>
-          <Link
-            to="/contact"
-            className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50"
-            onClick={toggleMenu}
-          >
-            Contact Us
-          </Link>
-          <div className="pt-4">
-            <Button type="secondary" btnText="Log In" to="/login" />
-            <Button type="primary" btnText="Sign Up" to="/register" />
+          <Link to="/" className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50" onClick={toggleMenu}>Home</Link>
+          <Link to="/about" className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50" onClick={toggleMenu}>About Us</Link>
+          <Link to="/users" className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50" onClick={toggleMenu}>For Users</Link>
+          <Link to="/workers" className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50" onClick={toggleMenu}>For Workers</Link>
+          <Link to="/contact" className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50" onClick={toggleMenu}>Contact Us</Link>
+
+          <div className="pt-4 border-t border-gray-700">
+            {isLoggedIn ? (
+              <div className="flex flex-col gap-3">
+                {/* Mobile user info */}
+                <div className="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+                    {initials}
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold text-sm">{fullName}</p>
+                    <p className="text-gray-400 text-xs">{isCraftsman ? 'Majstor' : 'Korisnik'}</p>
+                  </div>
+                </div>
+                <Link to="/profile/settings" onClick={toggleMenu} className="flex items-center gap-2 text-gray-300 hover:text-white py-2 px-4 rounded-lg hover:bg-gray-800/50 transition">
+                  <Settings className="w-4 h-4" /> Podešavanja naloga
+                </Link>
+                <button onClick={handleLogout} className="flex items-center gap-2 text-red-400 hover:text-red-300 py-2 px-4 rounded-lg hover:bg-gray-800/50 transition w-full">
+                  <LogOut className="w-4 h-4" /> Odjavi se
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                <Button type="secondary" btnText="Log In" to="/login" />
+                <Button type="primary" btnText="Sign Up" to="/register" />
+              </div>
+            )}
           </div>
         </nav>
       </div>
 
-      
       {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
-          onClick={toggleMenu}
-        />
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden" onClick={toggleMenu} />
       )}
     </>
   );
