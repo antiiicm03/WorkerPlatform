@@ -55,5 +55,28 @@ namespace WebProdavnica.DAL.Impl
             }
             return list;
         }
+
+        public List<Review> GetAll()
+        {
+            List<Review> list = new();
+            using SqlConnection conn = new(DataBaseConstant.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM dbo.reviews";
+            SqlDataReader r = cmd.ExecuteReader();
+            while (r.Read())
+            {
+                list.Add(new Review
+                {
+                    ReviewId = r.GetInt32(0),
+                    Rating = r.GetInt32(1),
+                    Comment = r.IsDBNull(2) ? null : r.GetString(2),
+                    CreatedAt = r.GetDateTime(3),
+                    UserId = r.GetInt32(4),
+                    CraftsmanId = r.GetInt32(5)
+                });
+            }
+            return list;
+        }
     }
 }

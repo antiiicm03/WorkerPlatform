@@ -14,5 +14,7 @@ namespace WebProdavnica.DAL.Abstract
         bool Delete(int id);
         JobOrder Get(int id);
         List<JobOrder> GetAll();
+
+        List<JobOrder> GetByCraftsmanId(int id);
     }
 }

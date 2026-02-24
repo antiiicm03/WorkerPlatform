@@ -15,6 +15,6 @@ namespace WebProdavnica.DAL.Abstract
         bool Delete(int id);
         User Get(int id);
         List<User> GetAll();
-
+        User? GetByEmail(string email);
     }
 }

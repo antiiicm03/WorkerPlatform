@@ -117,5 +117,34 @@ namespace WebProdavnica.DAL.Impl
 
             return cmd.ExecuteNonQuery() > 0;
         }
+
+        public List<JobOrder> GetByCraftsmanId(int id)
+        {
+            using SqlConnection conn = new(DataBaseConstant.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM dbo.job_orders WHERE craftsman_id=@cid";
+            cmd.Parameters.AddWithValue("@cid", id);
+
+            SqlDataReader r = cmd.ExecuteReader();
+            List<JobOrder> orders = new();
+
+            while (r.Read())
+            {
+                orders.Add(new JobOrder
+                {
+                    JobId = r.GetInt32(0),
+                    ScheduledDate = r.GetDateTime(1),
+                    JobDescription = r.GetString(2),
+                    Status = r.GetString(3),
+                    Urgent = r.GetBoolean(4),
+                    TotalPrice = r.GetDecimal(5),
+                    UserId = r.GetInt32(6),
+                    CraftsmanId = r.GetInt32(7)
+                });
+            }
+
+            return orders;
+        }
     }
 }

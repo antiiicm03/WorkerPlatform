@@ -11,5 +11,8 @@ namespace WebProdavnica.DAL.Abstract
     {
         bool Add(Review r);
         List<Review> GetByCraftsman(int craftsmanId);
+
+        List<Review> GetAll();
     }
+
 }

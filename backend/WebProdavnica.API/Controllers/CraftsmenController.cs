@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebProdavnica.BusinessLayer;
+using WebProdavnica.BusinessLayer.Abstract;
+using WebProdavnica.BusinessLayer.Impl;
 using WebProdavnica.Entities;
 
 namespace WebProdavnica.API.Controllers
@@ -8,9 +9,9 @@ namespace WebProdavnica.API.Controllers
     [Route("api/[controller]")]
     public class CraftsmenController : ControllerBase
     {
-        private readonly CraftsmanService _craftsmanService;
+        private readonly ICraftsmanService _craftsmanService;
 
-        public CraftsmenController(CraftsmanService craftsmanService)
+        public CraftsmenController(ICraftsmanService craftsmanService)
         {
             _craftsmanService = craftsmanService;
         }
