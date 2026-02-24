@@ -4,9 +4,14 @@ class ApiService {
   // Helper method for making requests
   async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
+    
+    // Get token from localStorage
+    const token = localStorage.getItem('accessToken');
+    
     const config = {
       headers: {
         'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` }),
         ...options.headers,
       },
       ...options,
@@ -27,11 +32,44 @@ class ApiService {
     }
   }
 
-  // Job Orders endpoints
-  async getJobOrder(id) {
-    return this.request(`/joborders/${id}`);
+  // Auth endpoints
+  async login(email, password, userType) {
+    return this.request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password, userType }),
+    });
   }
 
+  async registerUser(userData) {
+    return this.request('/auth/register/user', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
+  }
+
+  async registerCraftsman(craftsmanData) {
+    return this.request('/auth/register/craftsman', {
+      method: 'POST',
+      body: JSON.stringify(craftsmanData),
+    });
+  }
+
+  // Craftsman endpoints
+  async getCraftsmanProfile(id) {
+    return this.request(`/craftsmen/${id}`);
+  }
+
+  async updateCraftsman(id, craftsmanData) {
+    return this.request(`/craftsmen/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        ...craftsmanData,
+        craftsmanId: id
+      }),
+    });
+  }
+
+  // Job Orders endpoints
   async getJobOrdersByCraftsman(craftsmanId) {
     return this.request(`/joborders/craftsman/${craftsmanId}`);
   }

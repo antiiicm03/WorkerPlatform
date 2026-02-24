@@ -1,11 +1,14 @@
-import { useState } from "react";
-import Text from "../components/Text";
-import Button from "../components/Button";
-import { User, Briefcase, Clock, DollarSign, Mail, Phone, Edit2, Save, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { User, Briefcase, Clock, DollarSign, Phone, Edit2, Save, X, MapPin } from "lucide-react";
 
 export default function WorkerProfile({ data, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(data);
+
+  // Update formData when data prop changes
+  useEffect(() => {
+    setFormData(data);
+  }, [data]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,25 +60,6 @@ export default function WorkerProfile({ data, onUpdate }) {
 
       {/* Profile Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Username */}
-        <div>
-          <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
-            <User className="w-4 h-4" />
-            Korisničko ime
-          </label>
-          {isEditing ? (
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
-            />
-          ) : (
-            <p className="text-white text-lg">{data.username}</p>
-          )}
-        </div>
-
         {/* First Name */}
         <div>
           <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
@@ -86,8 +70,9 @@ export default function WorkerProfile({ data, onUpdate }) {
             <input
               type="text"
               name="firstName"
-              value={formData.firstName}
+              value={formData.firstName || ''}
               onChange={handleChange}
+              required
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
@@ -105,31 +90,13 @@ export default function WorkerProfile({ data, onUpdate }) {
             <input
               type="text"
               name="lastName"
-              value={formData.lastName}
+              value={formData.lastName || ''}
               onChange={handleChange}
+              required
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
             <p className="text-white text-lg">{data.lastName}</p>
-          )}
-        </div>
-
-        {/* Email */}
-        <div>
-          <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
-            <Mail className="w-4 h-4" />
-            Email
-          </label>
-          {isEditing ? (
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
-            />
-          ) : (
-            <p className="text-white text-lg">{data.email}</p>
           )}
         </div>
 
@@ -143,12 +110,33 @@ export default function WorkerProfile({ data, onUpdate }) {
             <input
               type="tel"
               name="phone"
-              value={formData.phone}
+              value={formData.phone || ''}
               onChange={handleChange}
+              required
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
             <p className="text-white text-lg">{data.phone}</p>
+          )}
+        </div>
+
+        {/* Location */}
+        <div>
+          <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
+            <MapPin className="w-4 h-4" />
+            Lokacija
+          </label>
+          {isEditing ? (
+            <input
+              type="text"
+              name="location"
+              value={formData.location || ''}
+              onChange={handleChange}
+              required
+              className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
+            />
+          ) : (
+            <p className="text-white text-lg">{data.location || 'Nije navedeno'}</p>
           )}
         </div>
 
@@ -162,8 +150,9 @@ export default function WorkerProfile({ data, onUpdate }) {
             <input
               type="text"
               name="profession"
-              value={formData.profession}
+              value={formData.profession || ''}
               onChange={handleChange}
+              required
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
@@ -175,18 +164,20 @@ export default function WorkerProfile({ data, onUpdate }) {
         <div>
           <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
             <Briefcase className="w-4 h-4" />
-            Iskustvo
+            Iskustvo (godine)
           </label>
           {isEditing ? (
             <input
-              type="text"
+              type="number"
               name="experience"
-              value={formData.experience}
+              value={formData.experience || 0}
               onChange={handleChange}
+              required
+              min="0"
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
-            <p className="text-white text-lg">{data.experience}</p>
+            <p className="text-white text-lg">{data.experience} godina</p>
           )}
         </div>
 
@@ -200,8 +191,10 @@ export default function WorkerProfile({ data, onUpdate }) {
             <input
               type="text"
               name="workingHours"
-              value={formData.workingHours}
+              value={formData.workingHours || ''}
               onChange={handleChange}
+              required
+              placeholder="npr. Pon-Pet: 8:00-17:00"
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
@@ -209,7 +202,7 @@ export default function WorkerProfile({ data, onUpdate }) {
           )}
         </div>
 
-        {/* Price Per Hour */}
+        {/* Hourly Rate */}
         <div>
           <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
             <DollarSign className="w-4 h-4" />
@@ -218,32 +211,16 @@ export default function WorkerProfile({ data, onUpdate }) {
           {isEditing ? (
             <input
               type="number"
-              name="pricePerHour"
-              value={formData.pricePerHour}
+              name="hourlyRate"
+              value={formData.hourlyRate || 0}
               onChange={handleChange}
+              required
+              min="0"
+              step="0.01"
               className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none"
             />
           ) : (
-            <p className="text-white text-lg">{data.pricePerHour} RSD</p>
-          )}
-        </div>
-
-        {/* Expertise */}
-        <div className="md:col-span-2">
-          <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
-            <Briefcase className="w-4 h-4" />
-            Ekspertiza
-          </label>
-          {isEditing ? (
-            <textarea
-              name="expertise"
-              value={formData.expertise}
-              onChange={handleChange}
-              rows={3}
-              className="w-full bg-[#262431] text-white px-4 py-3 rounded-lg border border-gray-600 focus:border-[#2324fe] focus:outline-none resize-none"
-            />
-          ) : (
-            <p className="text-white text-lg">{data.expertise}</p>
+            <p className="text-white text-lg">{data.hourlyRate} RSD</p>
           )}
         </div>
       </div>
