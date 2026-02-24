@@ -8,6 +8,11 @@ import AboutUs from './pages/AboutUs';
 import WorkerDashboard from './pages/WorkerDashboard';
 import WorkerChat from './pages/Chat';
 import CraftsmenByCategory from './pages/CraftsmenByCategory';
+import Checkout from './pages/Checkout';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
+import ProfileSettings from './pages/ProfileSettings';
+
 
 function App() {
   return (
@@ -22,6 +27,11 @@ function App() {
         <Route path="/workers/dashboard" element={<WorkerDashboard />} />
         <Route path="/workers/chat" element={<WorkerChat />} />
         <Route path="/craftsmen/:category" element={<CraftsmenByCategory />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-cancel" element={<PaymentCancel />} />
+        <Route path="/profile/settings" element={<ProfileSettings />} />
+        <Route path="/profile/settings" element={<ProfileSettings />} />
       </Routes>
     </BrowserRouter>
   );
