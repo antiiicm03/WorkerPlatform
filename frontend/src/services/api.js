@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'http://localhost:5114/api';
 
 class ApiService {
   // Helper method for making requests
@@ -19,11 +19,24 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      const data = await response.json();
+      
+      let data;
+      try {
+      data = await response.json();
+      } catch {
+      data = { message: 'Invalid JSON response' };
+      }
+
+      console.log('API Response:', { 
+      status: response.status, 
+      url, 
+      data 
+      });
 
       if (!response.ok) {
-        throw new Error(data.message || 'Request failed');
-      }
+      const errorMsg = data.message || data.error || JSON.stringify(data);
+      throw new Error(errorMsg);
+    }
 
       return data;
     } catch (error) {

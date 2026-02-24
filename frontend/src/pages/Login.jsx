@@ -3,18 +3,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import Header from "../components/Header";
 import Footer from '../components/Footer';
+import { useAuth } from '../context/AuthContext'; // Add this import
 
 const API_BASE = "http://localhost:5114";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Add this hook
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    userType: 'user' // "user" ili "craftsman"
+    userType: 'user'
   });
 
   const handleChange = (e) => {
@@ -48,13 +50,8 @@ const Login = () => {
 
       const data = json.data;
 
-      // Čuvamo sve potrebne podatke u localStorage
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      localStorage.setItem('userId', String(data.userId));
-      localStorage.setItem('role', data.role);
-      localStorage.setItem('fullName', data.fullName);
-      localStorage.setItem('email', data.email);
+      // USE AuthContext login function instead of directly setting localStorage
+      login(data);
 
       // Redirekcija na osnovu role
       if (data.role === 'Craftsman') {
@@ -70,6 +67,7 @@ const Login = () => {
     }
   };
 
+  // Rest of the component stays the same...
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex flex-col">
       <Header />
@@ -82,7 +80,6 @@ const Login = () => {
               <p className="text-gray-300">Log in to access your account</p>
             </div>
 
-            {/* Error poruka */}
             {error && (
               <div className="mb-6 p-4 bg-red-500/10 border border-red-500/40 rounded-lg text-red-400 text-sm text-center">
                 {error}
@@ -90,8 +87,6 @@ const Login = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-
-              {/* User Type Toggle */}
               <div>
                 <label className="block text-gray-300 mb-3 font-medium">
                   Prijavljujem se kao:
@@ -122,7 +117,6 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Email */}
               <div>
                 <label className="block text-gray-300 mb-2 font-medium">Email</label>
                 <div className="relative">
@@ -141,7 +135,6 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Password */}
               <div>
                 <label className="block text-gray-300 mb-2 font-medium">Lozinka</label>
                 <div className="relative">
@@ -167,7 +160,6 @@ const Login = () => {
                 </div>
               </div>
 
-              {/* Remember + Forgot */}
               <div className="flex items-center justify-between">
                 <label className="flex items-center">
                   <input
@@ -181,7 +173,6 @@ const Login = () => {
                 </Link>
               </div>
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={loading}

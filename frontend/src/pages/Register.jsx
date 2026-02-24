@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, User, Phone, MapPin, Briefcase, Clock } from 'lucide-react';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useAuth } from '../context/AuthContext';
 
 const API_BASE = "http://localhost:5114";
 
@@ -12,6 +13,7 @@ const professions = [
 ];
 
 const Register = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -104,13 +106,7 @@ const Register = () => {
 
       const data = json.data;
 
-      // Čuvamo token u localStorage — isti pattern kao Login
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      localStorage.setItem('userId', data.userId);
-      localStorage.setItem('role', data.role);
-      localStorage.setItem('fullName', data.fullName);
-      localStorage.setItem('email', data.email);
+      login(data);
 
       // Redirekcija na osnovu role
       if (data.role === 'Craftsman') {
