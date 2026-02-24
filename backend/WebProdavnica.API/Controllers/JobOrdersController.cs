@@ -2,6 +2,7 @@
 using WebProdavnica.BusinessLayer.Abstract;
 using WebProdavnica.BusinessLayer.Impl;
 using WebProdavnica.Entities;
+using WebProdavnica.Entities.DTOs;
 
 namespace WebProdavnica.API.Controllers
 {
@@ -18,62 +19,51 @@ namespace WebProdavnica.API.Controllers
 
         // POST: api/joborders
         [HttpPost]
-        public IActionResult Create([FromBody] JobOrder jobOrder)
+        public IActionResult Create([FromBody] JobOrderRequest request)
         {
             try
             {
-                bool success = _jobOrderService.Add(jobOrder);
+                var newJobOrder = new JobOrder
+                {
+                    ScheduledDate = request.ScheduledDate,
+                    JobDescription = request.JobDescription,
+                    Urgent = request.Urgent,
+                    TotalPrice = request.TotalPrice,
+                    UserId = request.UserId,
+                    CraftsmanId = request.CraftsmanId,
+                    Status = "Pending"
+                };
+
+                bool success = _jobOrderService.Add(newJobOrder);
 
                 if (success)
                 {
                     return CreatedAtAction(
                         nameof(GetById),
-                        new { id = jobOrder.JobId },
+                        new { id = newJobOrder.JobId },
                         new
                         {
                             success = true,
                             message = "Radni nalog uspešno kreiran!",
-                            data = jobOrder
+                            data = new
+                            {
+                                jobId = newJobOrder.JobId,
+                                scheduledDate = newJobOrder.ScheduledDate,
+                                jobDescription = newJobOrder.JobDescription,
+                                status = newJobOrder.Status,
+                                urgent = newJobOrder.Urgent,
+                                totalPrice = newJobOrder.TotalPrice,
+                                userId = newJobOrder.UserId,
+                                craftsmanId = newJobOrder.CraftsmanId
+                            }
                         });
                 }
 
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Kreiranje naloga nije uspelo"
-                });
+                return BadRequest(new { success = false, message = "Kreiranje naloga nije uspelo" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    error = ex.Message
-                });
-            }
-        }
-
-        // GET: api/joborders
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                var jobOrders = _jobOrderService.GetAll();
-                return Ok(new
-                {
-                    success = true,
-                    data = jobOrders,
-                    count = jobOrders.Count
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    error = ex.Message
-                });
+                return StatusCode(500, new { success = false, error = ex.Message });
             }
         }
 

@@ -19,8 +19,9 @@ namespace WebProdavnica.DAL.Impl
 
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"INSERT INTO dbo.job_orders
-            (scheduled_date,job_description,status,urgent,total_price,user_id,craftsman_id)
-            VALUES(@sd,@jd,@st,@u,@tp,@uid,@cid)";
+            (scheduled_date, job_description, status, urgent, total_price, user_id, craftsman_id)
+            OUTPUT INSERTED.job_id
+            VALUES(@sd, @jd, @st, @u, @tp, @uid, @cid)";
 
             cmd.Parameters.AddWithValue("@sd", j.ScheduledDate);
             cmd.Parameters.AddWithValue("@jd", j.JobDescription);
@@ -30,7 +31,14 @@ namespace WebProdavnica.DAL.Impl
             cmd.Parameters.AddWithValue("@uid", j.UserId);
             cmd.Parameters.AddWithValue("@cid", j.CraftsmanId);
 
-            return cmd.ExecuteNonQuery() > 0;
+            // ExecuteScalar vraća novi job_id
+            var newId = cmd.ExecuteScalar();
+            if (newId != null)
+            {
+                j.JobId = Convert.ToInt32(newId);
+                return true;
+            }
+            return false;
         }
 
         public bool Delete(int id)
