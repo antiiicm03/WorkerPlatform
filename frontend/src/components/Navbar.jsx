@@ -22,7 +22,7 @@ export default function Navbar() {
         <Link to="/users" className="text-gray-300 hover:text-white font-medium transition-colors">
           For Users
         </Link>
-        <Link to="/workers" className="text-gray-300 hover:text-white font-medium transition-colors">
+        <Link to="/workers/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">
           For Workers
         </Link>
         <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">
