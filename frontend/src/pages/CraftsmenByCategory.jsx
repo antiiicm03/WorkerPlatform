@@ -228,7 +228,7 @@ const CraftsmenByCategory = () => {
       setError(null);
       try {
         const response = await fetch(
-          `http://localhost:26125/api/craftsmen/profession/${encodeURIComponent(config.apiProfession)}`
+          `http://localhost:5114/api/craftsmen/profession/${encodeURIComponent(config.apiProfession)}`
         );
         if (!response.ok) throw new Error('Failed to fetch craftsmen');
         const json = await response.json();
@@ -271,7 +271,7 @@ const CraftsmenByCategory = () => {
 
           {/* Back button */}
           <button
-            onClick={() => navigate('/browse')}
+            onClick={() => navigate('/browse-tasks')}
             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
