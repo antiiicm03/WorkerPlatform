@@ -82,6 +82,13 @@ class ApiService {
     });
   }
 
+  async rateCraftsman(craftsmanId, rating) {
+  return this.request(`/craftsmen/${craftsmanId}/rate`, {
+    method: 'POST',
+    body: JSON.stringify({ rating }),
+  });
+}
+
   // Job Orders endpoints
   async getJobOrdersByCraftsman(craftsmanId) {
     return this.request(`/joborders/craftsman/${craftsmanId}`);

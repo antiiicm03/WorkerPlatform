@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   Wrench, Zap, Hammer, Armchair, Wind, Droplets, PaintBucket, Tv, Car,
   MapPin, Clock, Star, Briefcase, ArrowLeft, Phone, Mail, ChevronRight,
-  AlertCircle, Loader2, X, MessageSquare, CalendarDays, AlertTriangle, DollarSign
+  AlertCircle, Loader2, X, MessageSquare, CalendarDays, AlertTriangle, DollarSign, User
 } from 'lucide-react';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -379,6 +379,28 @@ const CraftsmanCard = ({ craftsman, onHire }) => {
       </div>
 
       <div className="px-6 pb-5 flex gap-3">
+        <Link
+          to={`/craftsman/${craftsman.craftsmanId}`}
+          className="flex-1 flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all border border-gray-600"
+        >
+          <User className="w-4 h-4" />
+          View Profile
+        </Link>
+        <a 
+          href={`mailto:${craftsman.email}`} 
+          className="flex items-center justify-center gap-1.5 text-gray-400 hover:text-blue-400 transition-colors text-xs px-3 py-2 bg-gray-800 rounded-lg border border-gray-700"
+        >
+          <Mail className="w-3.5 h-3.5" />
+        </a>
+        <a 
+          href={`tel:${craftsman.phone}`} 
+          className="flex items-center justify-center gap-1.5 text-gray-400 hover:text-blue-400 transition-colors text-xs px-3 py-2 bg-gray-800 rounded-lg border border-gray-700"
+        >
+          <Phone className="w-3.5 h-3.5" />
+        </a>
+      </div>
+
+      <div className="px-6 pb-5 flex gap-3">
         <a href={`mailto:${craftsman.email}`} className="flex items-center gap-1.5 text-gray-400 hover:text-blue-400 transition-colors text-xs">
           <Mail className="w-3.5 h-3.5" />
           <span className="truncate max-w-[120px]">{craftsman.email}</span>
@@ -393,7 +415,7 @@ const CraftsmanCard = ({ craftsman, onHire }) => {
   );
 };
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+// MAIN PAGE
 const CraftsmenByCategory = () => {
   const { category } = useParams();
   const navigate = useNavigate();

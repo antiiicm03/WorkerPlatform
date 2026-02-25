@@ -31,7 +31,7 @@ namespace WebProdavnica.API.Controllers
                     TotalPrice = request.TotalPrice,
                     UserId = request.UserId,
                     CraftsmanId = request.CraftsmanId,
-                    Status = "Pending"
+                    Status = request.Status,
                 };
 
                 bool success = _jobOrderService.Add(newJobOrder);
@@ -156,19 +156,19 @@ namespace WebProdavnica.API.Controllers
             }
         }
 
-        // GET: api/joborders/status/pending
-        [HttpGet("status/{status}")]
-        public IActionResult GetByStatus(string status)
+        // GET: api/joborders/craftsman/5/status/zakazano
+        [HttpGet("craftsman/{craftsmanId}/status/{status}")]
+        public IActionResult GetByCraftsmanAndStatus(int craftsmanId, string status)
         {
             try
             {
                 var jobOrders = _jobOrderService.GetAll()
-                    .Where(j => j.Status.ToLower() == status.ToLower())
+                    .Where(j => j.CraftsmanId == craftsmanId && j.Status.ToLower() == status.ToLower())
                     .ToList();
-
                 return Ok(new
                 {
                     success = true,
+                    craftsmanId = craftsmanId,
                     status = status,
                     data = jobOrders,
                     count = jobOrders.Count

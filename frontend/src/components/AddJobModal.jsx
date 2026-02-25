@@ -32,15 +32,16 @@ export default function AddJobModal({ isOpen, onClose, onSubmit, craftsmanId }) 
       // Convert form data to match backend model
       const jobOrder = {
         JobId: 0,
-        scheduledDate: new Date(formData.scheduledDate).toISOString(),
-        jobDescription: formData.jobDescription,
-        status: formData.status,
-        urgent: formData.urgent,
-        totalPrice: parseFloat(formData.totalPrice),
-        userId: formData.userId,
-        craftsmanId: formData.craftsmanId
-      };
+        ScheduledDate: new Date(formData.scheduledDate).toISOString(),
+        JobDescription: formData.jobDescription,
+        Status: formData.status, 
+        Urgent: formData.urgent, 
+        TotalPrice: parseFloat(formData.totalPrice),
+        UserId: formData.userId, 
+        CraftsmanId: formData.craftsmanId 
+    };
 
+      
       console.log('Submitting job order:', jobOrder);
 
       await onSubmit(jobOrder);

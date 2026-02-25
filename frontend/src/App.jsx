@@ -12,6 +12,7 @@ import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import ProfileSettings from './pages/ProfileSettings';
+import CraftsmanProfile from './pages/CraftsmanProfile';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/payment-cancel" element={<PaymentCancel />} />
         <Route path="/profile/settings" element={<ProfileSettings />} />
         <Route path="/profile/settings" element={<ProfileSettings />} />
+        <Route path="/craftsman/:id" element={<CraftsmanProfile />} />
       </Routes>
     </BrowserRouter>
   );

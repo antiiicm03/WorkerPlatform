@@ -14,7 +14,6 @@ builder.Services.AddControllers();
 
 //  REGISTER REPOSITORIES 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IJobOrderRepository, JobOrderRepository>();
 builder.Services.AddScoped<ICraftsmanRepository, CraftsmanRepository>();
@@ -25,7 +24,6 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICraftsmanService, CraftsmanService>();
 builder.Services.AddScoped<IJobOrderService, JobOrderService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
-builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IChatService, ChatService>();
