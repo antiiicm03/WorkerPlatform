@@ -5,7 +5,7 @@ import worker from "../assets/lottie/worker.json";
 
 export default function Main() {
     return (
-        <main className="flex-1 flex flex-col text-center gap-10 md:flex-row md:text-left md:p-10 md:px-20">
+        <main className="mx-auto max-w-7xl flex-1 flex flex-col text-center gap-10 md:flex-row md:text-left md:p-10 md:px-20">
             <div className="flex-1 flex flex-col items-center justify-center p-10 gap-2">
                 <Text type="heading" value="Find Trusted Local Workers. Get the Job Done — Fast."></Text>
                 <Text type="secondary" value="Building trust between neighbors by making local services simple, transparent, and reliable."></Text>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebProdavnica.BusinessLayer.Abstract;
-using WebProdavnica.BusinessLayer.Impl;
 using WebProdavnica.Entities;
+using WebProdavnica.Entities.DTOs;
 
 namespace WebProdavnica.API.Controllers
 {
@@ -14,43 +14,6 @@ namespace WebProdavnica.API.Controllers
         public CraftsmenController(ICraftsmanService craftsmanService)
         {
             _craftsmanService = craftsmanService;
-        }
-
-        // POST: api/craftsmen
-        [HttpPost]
-        public IActionResult Create([FromBody] Craftsman craftsman)
-        {
-            try
-            {
-                bool success = _craftsmanService.Add(craftsman);
-
-                if (success)
-                {
-                    return CreatedAtAction(
-                        nameof(GetById),
-                        new { id = craftsman.CraftsmanId },
-                        new
-                        {
-                            success = true,
-                            message = "Zanatlija uspešno dodat!",
-                            data = craftsman
-                        });
-                }
-
-                return BadRequest(new
-                {
-                    success = false,
-                    message = "Dodavanje nije uspelo"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new
-                {
-                    success = false,
-                    error = ex.Message
-                });
-            }
         }
 
         // GET: api/craftsmen
@@ -238,6 +201,56 @@ namespace WebProdavnica.API.Controllers
                     success = false,
                     error = ex.Message
                 });
+            }
+        }
+
+        // POST: api/craftsmen/5/rate
+        [HttpPost("{id}/rate")]
+        public IActionResult RateCraftsman(int id, [FromBody] RatingRequest request)
+        {
+            try
+            {
+                if (request.Rating < 1 || request.Rating > 5)
+                {
+                    return BadRequest(new { success = false, message = "Ocena mora biti između 1 i 5" });
+                }
+
+                var craftsman = _craftsmanService.Get(id);
+                if (craftsman == null)
+                {
+                    return NotFound(new { success = false, message = "Majstor nije pronađen" });
+                }
+
+                // Calculate new average
+                decimal currentAverage = craftsman.AverageRating ?? 0;
+                int currentCount = craftsman.RatingCount;
+
+                decimal newAverage = ((currentAverage * currentCount) + request.Rating) / (currentCount + 1);
+
+                craftsman.AverageRating = newAverage;
+                craftsman.RatingCount = currentCount + 1;
+
+                bool success = _craftsmanService.Update(craftsman);
+
+                if (success)
+                {
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "Ocena uspešno dodata",
+                        data = new
+                        {
+                            averageRating = newAverage,
+                            ratingCount = craftsman.RatingCount
+                        }
+                    });
+                }
+
+                return BadRequest(new { success = false, message = "Ažuriranje nije uspelo" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { success = false, error = ex.Message });
             }
         }
     }

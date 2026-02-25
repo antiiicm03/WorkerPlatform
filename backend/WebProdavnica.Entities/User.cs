@@ -20,6 +20,6 @@ public class User
     public DateTime? RefreshTokenExpiry { get; set; }
 
     public ICollection<JobOrder> JobOrders { get; set; } = new List<JobOrder>();
-    public ICollection<Review> Reviews { get; set; } = new List<Review>();
+    public ICollection<Chat> Chats { get; set; } = new List<Chat>();
 }
 

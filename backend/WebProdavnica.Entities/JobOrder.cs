@@ -10,8 +10,8 @@ namespace WebProdavnica.Entities
     {
         public int JobId { get; set; }
         public DateTime ScheduledDate { get; set; }
-        public string JobDescription { get; set; }
-        public string Status { get; set; }
+        public string? JobDescription { get; set; }
+        public string? Status { get; set; }
         public bool Urgent { get; set; }
         public decimal TotalPrice { get; set; }
 
@@ -20,8 +20,8 @@ namespace WebProdavnica.Entities
         public int CraftsmanId { get; set; }
 
         
-        public User User { get; set; }
-        public Craftsman Craftsman { get; set; }
+        public User? User { get; set; }
+        public Craftsman? Craftsman { get; set; }
         public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

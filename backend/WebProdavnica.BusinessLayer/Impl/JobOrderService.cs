@@ -14,7 +14,6 @@ namespace WebProdavnica.BusinessLayer.Impl
 
         public bool Add(JobOrder jobOrder)
         {
-            jobOrder.Status = "Pending"; // Svaki novi nalog pocinje kao Pending
             return _jobOrderRepository.Add(jobOrder);
         }
 

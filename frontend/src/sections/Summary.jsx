@@ -6,8 +6,8 @@ import Button from "../components/Button";
 
 export default function Summary() {
     return (
-        <div className="wrap pb-10 bg-[#262431] md:px-20">
-            <div className="p-5 bg-[#262431] md:flex flex-row-reverse">
+        <div className="mx-auto max-w-7xl wrap pb-10 md:px-20">
+            <div className="p-5 md:flex flex-row-reverse">
                 <div className="p-5 text-justified md:flex-1 md:flex md:flex-col md:justify-center md:items-center">
                     <Text type="subHeading" value="Start using Leno today to achieve your long term Goals"></Text>
                     <Text type="primary" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, corporis aperiam voluptatibus libero accusamus illo asperiores dolor rerum quibusdam optio!"></Text>
@@ -19,7 +19,7 @@ export default function Summary() {
                     <Lottie animationData={Painter} className="max-w-[400px] md:max-w-[500px]"></Lottie>
                 </div>
             </div>
-            <div className="p-5 bg-[#262431] md:flex">
+            <div className="p-5 md:flex">
                 <div className="p-5 text-justified md:flex-1 md:flex md:flex-col md:justify-center md:items-center">
                     <Text type="subHeading" value="The Calendar feature helps you organize tasks"></Text>
                     <Text type="primary" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, corporis aperiam voluptatibus libero accusamus illo asperiores dolor rerum quibusdam optio! Lorem ipsum dolor sit amet consectetur adipisicing."></Text>

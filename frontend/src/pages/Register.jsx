@@ -1,34 +1,33 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Mail, Lock, Eye, EyeOff, User, Phone, MapPin, Briefcase, Clock, DollarSign } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Mail, Lock, Eye, EyeOff, User, Phone, MapPin, Briefcase, Clock } from 'lucide-react';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useAuth } from '../context/AuthContext';
+
+const API_BASE = "http://localhost:5114";
 
 const professions = [
-  'Plumber',
-  'Electrician',
-  'Handyman',
-  'Furniture Assembly',
-  'Air Conditioning',
-  'Painter',
-  'TV Mounting',
-  'Auto Mechanic',
-  'General Help'
+  'Plumber', 'Electrician', 'Handyman', 'Furniture Assembly',
+  'Air Conditioning', 'Painter', 'TV Mounting', 'Auto Mechanic', 'General Help'
 ];
 
 const Register = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({
-    // Common fields
-    fullName: '',
+    firstName: '',
+    lastName: '',
     email: '',
     phone: '',
     password: '',
     confirmPassword: '',
     userType: 'user',
     agreeToTerms: false,
-    // Worker-specific fields
     location: '',
     profession: '',
     experience: '',
@@ -38,32 +37,89 @@ const Register = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value
-    });
+    setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Passwords do not match!');
+      setError('Lozinke se ne poklapaju!');
       return;
     }
-
     if (!formData.agreeToTerms) {
-      alert('Please accept the Terms and Conditions');
+      setError('Morate prihvatiti uslove korišćenja');
       return;
     }
-
     if (formData.userType === 'worker' && !formData.profession) {
-      alert('Please select your profession');
+      setError('Molimo izaberite profesiju');
       return;
     }
 
-    console.log('Registration submitted:', formData);
-    alert('Registration functionality not yet connected to backend');
+    setLoading(true);
+    setError(null);
+
+    try {
+      // Koristimo direktno firstName i lastName
+      const firstName = formData.firstName.trim();
+      const lastName = formData.lastName.trim();
+
+      let endpoint, body;
+
+      if (formData.userType === 'worker') {
+        endpoint = `${API_BASE}/api/auth/register/craftsman`;
+        body = {
+          firstName,
+          lastName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+          location: formData.location,
+          profession: formData.profession,
+          experience: parseInt(formData.experience),
+          hourlyRate: parseFloat(formData.hourlyRate),
+          workingHours: formData.workingHours
+        };
+      } else {
+        endpoint = `${API_BASE}/api/auth/register/user`;
+        body = {
+          firstName,
+          lastName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+          location: formData.location || ''
+        };
+      }
+
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      const json = await response.json();
+
+      if (!response.ok || !json.success) {
+        throw new Error(json.message || 'Registracija nije uspela');
+      }
+
+      const data = json.data;
+
+      login(data);
+
+      // Redirekcija na osnovu role
+      if (data.role === 'Craftsman') {
+        navigate('/workers/dashboard');
+      } else {
+        navigate('/');
+      }
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const isWorker = formData.userType === 'worker';
@@ -76,172 +132,125 @@ const Register = () => {
         <div className="max-w-md w-full">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-white mb-2">
-                Create Account
-              </h1>
-              <p className="text-gray-300">
-                Join Majstorija and get started today
-              </p>
+              <h1 className="text-4xl font-bold text-white mb-2">Create Account</h1>
+              <p className="text-gray-300">Join Majstorija and get started today</p>
             </div>
+
+            {/* Error poruka */}
+            {error && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/40 rounded-lg text-red-400 text-sm text-center">
+                {error}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
 
               {/* User Type Toggle */}
               <div>
-                <label className="block text-gray-300 mb-3 font-medium">
-                  I want to register as:
-                </label>
+                <label className="block text-gray-300 mb-3 font-medium">I want to register as:</label>
                 <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setFormData({ ...formData, userType: 'user' })}
-                    className={`py-3 px-4 rounded-lg font-medium transition ${
-                      formData.userType === 'user'
-                        ? 'bg-blue-600 text-white border-2 border-blue-500'
-                        : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'
-                    }`}
-                  >
+                  <button type="button" onClick={() => setFormData({ ...formData, userType: 'user' })}
+                    className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'user' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
                     User
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => setFormData({ ...formData, userType: 'worker' })}
-                    className={`py-3 px-4 rounded-lg font-medium transition ${
-                      formData.userType === 'worker'
-                        ? 'bg-blue-600 text-white border-2 border-blue-500'
-                        : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'
-                    }`}
-                  >
+                  <button type="button" onClick={() => setFormData({ ...formData, userType: 'worker' })}
+                    className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'worker' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
                     Worker
                   </button>
                 </div>
               </div>
 
-              {/* Full Name */}
-              <div>
-                <label className="block text-gray-300 mb-2 font-medium">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <User className="w-5 h-5 text-gray-400" />
+              {/* First Name + Last Name */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-gray-300 mb-2 font-medium">First Name</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <User className="w-5 h-5 text-gray-400" />
+                    </div>
+                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required
+                      className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      placeholder="First Name" />
                   </div>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    required
-                    className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Enter your full name"
-                  />
+                </div>
+                <div>
+                  <label className="block text-gray-300 mb-2 font-medium">Last Name</label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                      <User className="w-5 h-5 text-gray-400" />
+                    </div>
+                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required
+                      className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                      placeholder="Last Name" />
+                  </div>
                 </div>
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">
-                  Email Address
-                </label>
+                <label className="block text-gray-300 mb-2 font-medium">Email Address</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} required
                     className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="your.email@example.com"
-                  />
+                    placeholder="your.email@example.com" />
                 </div>
               </div>
 
               {/* Phone */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">
-                  Phone Number
-                </label>
+                <label className="block text-gray-300 mb-2 font-medium">Phone Number</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Phone className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required
                     className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="+381 60 123 4567"
-                  />
+                    placeholder="+381 60 123 4567" />
                 </div>
               </div>
 
-              {/* ── WORKER-ONLY FIELDS ── */}
+              {/* WORKER ONLY FIELDS */}
               {isWorker && (
                 <>
-                  {/* Divider */}
                   <div className="relative my-2">
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-gray-600"></div>
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">
-                        Professional Info
-                      </span>
+                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Professional Info</span>
                     </div>
                   </div>
 
                   {/* Location */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">
-                      Location
-                    </label>
+                    <label className="block text-gray-300 mb-2 font-medium">Location</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <MapPin className="w-5 h-5 text-gray-400" />
                       </div>
-                      <input
-                        type="text"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                        required={isWorker}
+                      <input type="text" name="location" value={formData.location} onChange={handleChange} required={isWorker}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. Beograd, Novi Sad..."
-                      />
+                        placeholder="e.g. Beograd, Novi Sad..." />
                     </div>
                   </div>
 
-                  {/* Profession Dropdown */}
+                  {/* Profession */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">
-                      Profession
-                    </label>
+                    <label className="block text-gray-300 mb-2 font-medium">Profession</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
                       </div>
-                      <select
-                        name="profession"
-                        value={formData.profession}
-                        onChange={handleChange}
-                        required={isWorker}
-                        className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer"
-                      >
-                        <option value="" disabled className="bg-gray-800 text-gray-400">
-                          Select your profession
-                        </option>
+                      <select name="profession" value={formData.profession} onChange={handleChange} required={isWorker}
+                        className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer">
+                        <option value="" disabled className="bg-gray-800 text-gray-400">Select your profession</option>
                         {professions.map((p) => (
-                          <option key={p} value={p.toLowerCase()} className="bg-gray-800 text-white">
-                            {p}
-                          </option>
+                          <option key={p} value={p.toLowerCase()} className="bg-gray-800 text-white">{p}</option>
                         ))}
                       </select>
-                      {/* Custom dropdown arrow */}
                       <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -252,80 +261,49 @@ const Register = () => {
 
                   {/* Experience */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">
-                      Years of Experience
-                    </label>
+                    <label className="block text-gray-300 mb-2 font-medium">Years of Experience</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
                       </div>
-                      <input
-                        type="number"
-                        name="experience"
-                        value={formData.experience}
-                        onChange={handleChange}
-                        required={isWorker}
-                        min="0"
-                        max="60"
+                      <input type="number" name="experience" value={formData.experience} onChange={handleChange} required={isWorker} min="0" max="60"
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. 5"
-                      />
+                        placeholder="e.g. 5" />
                     </div>
                   </div>
 
                   {/* Hourly Rate */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">
-                      Hourly Rate (RSD)
-                    </label>
+                    <label className="block text-gray-300 mb-2 font-medium">Hourly Rate (RSD)</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                          <span className="text-gray-400 text-sm font-semibold">RSD</span>
+                        <span className="text-gray-400 text-sm font-semibold">RSD</span>
                       </div>
-                      <input
-                        type="number"
-                        name="hourlyRate"
-                        value={formData.hourlyRate}
-                        onChange={handleChange}
-                        required={isWorker}
-                        min="0"
-                        step="0.01"
+                      <input type="number" name="hourlyRate" value={formData.hourlyRate} onChange={handleChange} required={isWorker} min="0" step="0.01"
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. 25.00"
-                      />
+                        placeholder="e.g. 1500" />
                     </div>
                   </div>
 
                   {/* Working Hours */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">
-                      Working Hours
-                    </label>
+                    <label className="block text-gray-300 mb-2 font-medium">Working Hours</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Clock className="w-5 h-5 text-gray-400" />
                       </div>
-                      <input
-                        type="text"
-                        name="workingHours"
-                        value={formData.workingHours}
-                        onChange={handleChange}
-                        required={isWorker}
+                      <input type="text" name="workingHours" value={formData.workingHours} onChange={handleChange} required={isWorker}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. Mon-Fri 08:00-17:00"
-                      />
+                        placeholder="e.g. Mon-Fri 08:00-17:00" />
                     </div>
                   </div>
 
-                  {/* Divider back to common */}
                   <div className="relative my-2">
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-gray-600"></div>
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">
-                        Account Security
-                      </span>
+                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Account Security</span>
                     </div>
                   </div>
                 </>
@@ -333,28 +311,16 @@ const Register = () => {
 
               {/* Password */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">
-                  Password
-                </label>
+                <label className="block text-gray-300 mb-2 font-medium">Password</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                    minLength="8"
+                  <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} required minLength="8"
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Create a strong password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition"
-                  >
+                    placeholder="Create a strong password" />
+                  <button type="button" onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition">
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
@@ -363,27 +329,16 @@ const Register = () => {
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">
-                  Confirm Password
-                </label>
+                <label className="block text-gray-300 mb-2 font-medium">Confirm Password</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
+                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Confirm your password"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition"
-                  >
+                    placeholder="Confirm your password" />
+                  <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition">
                     {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
@@ -391,14 +346,8 @@ const Register = () => {
 
               {/* Terms */}
               <div className="flex items-start">
-                <input
-                  type="checkbox"
-                  name="agreeToTerms"
-                  checked={formData.agreeToTerms}
-                  onChange={handleChange}
-                  className="w-4 h-4 mt-1 bg-gray-700 border-gray-600 rounded text-blue-600 focus:ring-2 focus:ring-blue-500"
-                  required
-                />
+                <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange} required
+                  className="w-4 h-4 mt-1 bg-gray-700 border-gray-600 rounded text-blue-600 focus:ring-2 focus:ring-blue-500" />
                 <label className="ml-3 text-sm text-gray-300">
                   I agree to the{' '}
                   <Link to="/terms" className="text-blue-400 hover:text-blue-300">Terms and Conditions</Link>
@@ -408,64 +357,22 @@ const Register = () => {
               </div>
 
               {/* Submit */}
-              <button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98]"
-              >
-                Create Account
+              <button type="submit" disabled={loading}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
+                {loading ? 'Creating account...' : 'Create Account'}
               </button>
-
-              {/* Divider */}
-              <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-600"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-gray-800/50 text-gray-400">or sign up with</span>
-                </div>
-              </div>
-
-              {/* Social */}
-              <div className="space-y-3">
-                <button
-                  type="button"
-                  className="w-full flex items-center justify-center gap-3 bg-gray-700/50 hover:bg-gray-700 border border-gray-600 text-white font-medium py-3 px-6 rounded-lg transition"
-                >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                    <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                  </svg>
-                  Continue with Google
-                </button>
-
-                <button
-                  type="button"
-                  className="w-full flex items-center justify-center gap-3 bg-gray-700/50 hover:bg-gray-700 border border-gray-600 text-white font-medium py-3 px-6 rounded-lg transition"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                  Continue with Facebook
-                </button>
-              </div>
             </form>
 
             <div className="mt-8 text-center">
               <p className="text-gray-300">
                 Already have an account?{' '}
-                <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition">
-                  Log in
-                </Link>
+                <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition">Log in</Link>
               </p>
             </div>
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">
-              🔒 Your data is secure and encrypted
-            </p>
+            <p className="text-sm text-gray-400">🔒 Your data is secure and encrypted</p>
           </div>
         </div>
       </div>
