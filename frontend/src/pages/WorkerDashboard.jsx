@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MessageCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WorkerProfile from "../components/WorkerProfile";
@@ -10,26 +10,20 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
 export default function WorkerDashboard() {
-  const { user, loading: authLoading } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth(); // Removed loading and navigate
 
   const [workerData, setWorkerData] = useState(null);
-  const [originalWorkerData, setOriginalWorkerData] = useState(null); // Keep original for updates
+  const [originalWorkerData, setOriginalWorkerData] = useState(null);
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Redirect if not logged in or not a craftsman
-  useEffect(() => {
-    if (!authLoading && (!user || user.role !== 'Craftsman')) {
-      navigate('/login');
-    }
-  }, [user, authLoading, navigate]);
+  // REMOVED: Redirect logic - Dashboard.jsx handles this now
 
   // Fetch profile and jobs on mount
   useEffect(() => {
-    if (user && user.role === 'Craftsman') {
+    if (user) {
       fetchProfile();
       fetchJobs();
     }
@@ -40,10 +34,8 @@ export default function WorkerDashboard() {
       const response = await api.getCraftsmanProfile(user.id);
       const craftsman = response.data || response;
       
-      // Store the original data for updates
       setOriginalWorkerData(craftsman);
       
-      // Transform for display
       setWorkerData({
         craftsmanId: craftsman.craftsmanId,
         firstName: craftsman.firstName,
@@ -55,7 +47,8 @@ export default function WorkerDashboard() {
         workingHours: craftsman.workingHours,
         hourlyRate: craftsman.hourlyRate,
         location: craftsman.location || '',
-        averageRating: craftsman.averageRating || 0
+        averageRating: craftsman.averageRating || 0,
+        ratingCount: craftsman.ratingCount || 0
       });
     } catch (err) {
       console.error('Error fetching profile:', err);
@@ -81,10 +74,8 @@ export default function WorkerDashboard() {
 
   const handleProfileUpdate = async (updatedData) => {
     try {
-      // Merge updated editable fields with original data (keeps email, password, etc.)
       const craftsmanUpdate = {
-        ...originalWorkerData, // Start with all original data
-        // Update only the editable fields
+        ...originalWorkerData,
         firstName: updatedData.firstName,
         lastName: updatedData.lastName,
         phone: updatedData.phone,
@@ -98,7 +89,6 @@ export default function WorkerDashboard() {
       const response = await api.updateCraftsman(user.id, craftsmanUpdate);
       
       if (response.success) {
-        // Update both original and display data
         setOriginalWorkerData(craftsmanUpdate);
         setWorkerData(updatedData);
         alert('Profil uspešno ažuriran!');
@@ -106,7 +96,7 @@ export default function WorkerDashboard() {
     } catch (err) {
       console.error('Error updating profile:', err);
       alert('Greška pri ažuriranju profila: ' + err.message);
-      throw err; // Re-throw to prevent modal from closing on error
+      throw err;
     }
   };
 
@@ -123,7 +113,6 @@ export default function WorkerDashboard() {
       const response = await api.createJobOrder(jobOrder);
       console.log('Job created:', response);
       
-      // Refresh the jobs list
       await fetchJobs();
       
       alert('Posao uspešno dodat!');
@@ -133,8 +122,8 @@ export default function WorkerDashboard() {
     }
   };
 
-  // Show loading while checking auth
-  if (authLoading || !workerData) {
+  // Show loading while fetching data
+  if (!workerData) {
     return (
       <div className="min-h-screen bg-[#121418] flex items-center justify-center">
         <div className="text-center">
@@ -151,7 +140,6 @@ export default function WorkerDashboard() {
       
       <main className="flex-1 p-6 lg:p-10">
         <div className="max-w-6xl mx-auto">
-          {/* Quick Actions Bar */}
           <div className="mb-6 flex justify-between items-center">
             <div className="text-white">
               <h1 className="text-2xl font-bold">Dobrodošli, {workerData.firstName}!</h1>
@@ -165,20 +153,17 @@ export default function WorkerDashboard() {
             </Link>
           </div>
 
-          {/* Worker Profile Section */}
           <WorkerProfile 
             data={workerData} 
             onUpdate={handleProfileUpdate}
           />
 
-          {/* Error Message */}
           {error && (
             <div className="mt-6 bg-red-500/20 border border-red-500 rounded-lg p-4">
               <p className="text-red-500">{error}</p>
             </div>
           )}
 
-          {/* Services Section */}
           <div className="mt-10">
             {isLoading ? (
               <div className="bg-[#1e2028] rounded-2xl p-8 border border-gray-700 text-center">
@@ -197,7 +182,6 @@ export default function WorkerDashboard() {
 
       <Footer />
 
-      {/* Add Job Modal */}
       <AddJobModal
         isOpen={isModalOpen}
         onClose={handleModalClose}

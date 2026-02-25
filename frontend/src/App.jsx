@@ -5,14 +5,19 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import BrowseTasks from './pages/BrowseTasks';
 import AboutUs from './pages/AboutUs';
+<<<<<<< Updated upstream
 import WorkerDashboard from './pages/WorkerDashboard';
 import WorkerChat from './pages/Chat';
+=======
+import Chat from './pages/Chat';
+>>>>>>> Stashed changes
 import CraftsmenByCategory from './pages/CraftsmenByCategory';
 import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import ProfileSettings from './pages/ProfileSettings';
 import CraftsmanProfile from './pages/CraftsmanProfile';
+import Dashboard from './pages/Dashboard';
 
 
 function App() {
@@ -25,8 +30,16 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/browse-tasks" element={<BrowseTasks />} />
+<<<<<<< Updated upstream
         <Route path="/workers/dashboard" element={<WorkerDashboard />} />
         <Route path="/workers/chat" element={<WorkerChat />} />
+=======
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/workers/dashboard" element={<Dashboard />} />
+        <Route path="/users/dashboard" element={<Dashboard />} />
+        <Route path="/workers/chat" element={<Chat />} />
+        <Route path="/chat" element={<Chat />} />
+>>>>>>> Stashed changes
         <Route path="/craftsmen/:category" element={<CraftsmenByCategory />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
