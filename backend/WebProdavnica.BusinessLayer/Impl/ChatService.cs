@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebProdavnica.BusinessLayer.Abstract;
-using WebProdavnica.DAL.Impl;
-using WebProdavnica.Entities;
+﻿using WebProdavnica.BusinessLayer.Abstract;
 using WebProdavnica.DAL.Abstract;
+using WebProdavnica.Entities;
 
 namespace WebProdavnica.BusinessLayer.Impl
 {
@@ -25,7 +19,13 @@ namespace WebProdavnica.BusinessLayer.Impl
         public Task<IEnumerable<Chat>> GetChatsByCraftsmanIdAsync(int craftsmanId)
             => _chatRepository.GetChatsByCraftsmanIdAsync(craftsmanId);
 
+        public Task<IEnumerable<Chat>> GetConversationAsync(int userId, int craftsmanId)
+            => _chatRepository.GetConversationAsync(userId, craftsmanId);
+
         public Task<Chat> SendMessageAsync(Chat chat)
             => _chatRepository.SendMessageAsync(chat);
+
+        public Task MarkAsReadAsync(int userId, int craftsmanId, string readerRole)
+            => _chatRepository.MarkAsReadAsync(userId, craftsmanId, readerRole);
     }
 }
