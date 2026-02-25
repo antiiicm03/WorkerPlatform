@@ -47,8 +47,8 @@ namespace WebProdavnica.API.Controllers
                         }
                     },
                     Mode = "payment",
-                    SuccessUrl = $"http://localhost:5174/payment-success?jobId={request.JobId}&session_id={{CHECKOUT_SESSION_ID}}",
-                    CancelUrl = $"http://localhost:5174/payment-cancel?jobId={request.JobId}",
+                    SuccessUrl = $"http://localhost:5173/payment-success?jobId={request.JobId}&session_id={{CHECKOUT_SESSION_ID}}",
+                    CancelUrl = $"http://localhost:5173/payment-cancel?jobId={request.JobId}",
                     Metadata = new Dictionary<string, string>
                     {
                         { "jobId", request.JobId.ToString() },

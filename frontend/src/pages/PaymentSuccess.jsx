@@ -84,7 +84,7 @@ export default function PaymentSuccess() {
               <p className="text-gray-500 text-sm mb-8">Majstor će vas kontaktirati uskoro.</p>
               <div className="flex flex-col gap-3">
                 <Link
-                  to="/my-orders"
+                  to="/users/dashboard"
                   className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition"
                 >
                   Pogledaj porudžbine

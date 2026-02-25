@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { useAuth } from '../context/AuthContext'; // ← DODATO
+import { useAuth } from '../context/AuthContext';
 
 const API_BASE = "http://localhost:5114";
 
@@ -33,7 +33,7 @@ const StarRating = ({ rating, size = 'sm' }) => {
   return <div className="flex gap-0.5">{stars}</div>;
 };
 
-// ─── HIRE MODAL ────────────────────────────────────────────────────────────────
+// HIRE MODAL
 const HireModal = ({ craftsman, onClose, navigate }) => {
   const { user, loading: authLoading } = useAuth();
   const [tab, setTab] = useState('profile');
@@ -318,7 +318,7 @@ const HireModal = ({ craftsman, onClose, navigate }) => {
   );
 };
 
-// ─── CRAFTSMAN CARD ─────────────────────────────────────────────────────────
+// CRAFTSMAN CARD 
 const CraftsmanCard = ({ craftsman, onHire }) => {
   const initials = `${craftsman.firstName?.[0] ?? ''}${craftsman.lastName?.[0] ?? ''}`.toUpperCase();
 
