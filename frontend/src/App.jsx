@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import BrowseTasks from './pages/BrowseTasks';
 import AboutUs from './pages/AboutUs';
-import WorkerDashboard from './pages/WorkerDashboard';
 import CraftsmenByCategory from './pages/CraftsmenByCategory';
 import Chat from './pages/Chat';
 import Checkout from './pages/Checkout';
@@ -13,7 +12,7 @@ import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import ProfileSettings from './pages/ProfileSettings';
 import CraftsmanProfile from './pages/CraftsmanProfile';
-
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
@@ -25,7 +24,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/browse-tasks" element={<BrowseTasks />} />
-        <Route path="/workers/dashboard" element={<WorkerDashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/workers/dashboard" element={<Dashboard />} />
+        <Route path="/users/dashboard" element={<Dashboard />} />
         <Route path="/workers/chat" element={<Chat />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/craftsmen/:category" element={<CraftsmenByCategory />} />
@@ -33,8 +34,8 @@ function App() {
         <Route path="/payment-success" element={<PaymentSuccess />} />
         <Route path="/payment-cancel" element={<PaymentCancel />} />
         <Route path="/profile/settings" element={<ProfileSettings />} />
+        <Route path="/profile/settings" element={<ProfileSettings />} />
         <Route path="/craftsman/:id" element={<CraftsmanProfile />} />
-
       </Routes>
     </BrowserRouter>
   );

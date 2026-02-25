@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MessageCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WorkerProfile from "../components/WorkerProfile";
@@ -10,26 +10,18 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
 export default function WorkerDashboard() {
-  const { user, loading: authLoading } = useAuth();
-  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [workerData, setWorkerData] = useState(null);
-  const [originalWorkerData, setOriginalWorkerData] = useState(null); // Keep original for updates
+  const [originalWorkerData, setOriginalWorkerData] = useState(null);
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Redirect if not logged in or not a craftsman
-  useEffect(() => {
-    if (!authLoading && (!user || user.role !== 'Craftsman')) {
-      navigate('/login');
-    }
-  }, [user, authLoading, navigate]);
-
   // Fetch profile and jobs on mount
   useEffect(() => {
-    if (user && user.role === 'Craftsman') {
+    if (user) {
       fetchProfile();
       fetchJobs();
     }
@@ -40,10 +32,8 @@ export default function WorkerDashboard() {
       const response = await api.getCraftsmanProfile(user.id);
       const craftsman = response.data || response;
       
-      // Store the original data for updates
       setOriginalWorkerData(craftsman);
       
-      // Transform for display
       setWorkerData({
         craftsmanId: craftsman.craftsmanId,
         firstName: craftsman.firstName,
@@ -55,7 +45,8 @@ export default function WorkerDashboard() {
         workingHours: craftsman.workingHours,
         hourlyRate: craftsman.hourlyRate,
         location: craftsman.location || '',
-        averageRating: craftsman.averageRating || 0
+        averageRating: craftsman.averageRating || 0,
+        ratingCount: craftsman.ratingCount || 0
       });
     } catch (err) {
       console.error('Error fetching profile:', err);
@@ -81,10 +72,8 @@ export default function WorkerDashboard() {
 
   const handleProfileUpdate = async (updatedData) => {
     try {
-      // Merge updated editable fields with original data (keeps email, password, etc.)
       const craftsmanUpdate = {
-        ...originalWorkerData, // Start with all original data
-        // Update only the editable fields
+        ...originalWorkerData,
         firstName: updatedData.firstName,
         lastName: updatedData.lastName,
         phone: updatedData.phone,
@@ -98,7 +87,6 @@ export default function WorkerDashboard() {
       const response = await api.updateCraftsman(user.id, craftsmanUpdate);
       
       if (response.success) {
-        // Update both original and display data
         setOriginalWorkerData(craftsmanUpdate);
         setWorkerData(updatedData);
         alert('Profil uspešno ažuriran!');
@@ -106,7 +94,7 @@ export default function WorkerDashboard() {
     } catch (err) {
       console.error('Error updating profile:', err);
       alert('Greška pri ažuriranju profila: ' + err.message);
-      throw err; // Re-throw to prevent modal from closing on error
+      throw err;
     }
   };
 
@@ -123,7 +111,6 @@ export default function WorkerDashboard() {
       const response = await api.createJobOrder(jobOrder);
       console.log('Job created:', response);
       
-      // Refresh the jobs list
       await fetchJobs();
       
       alert('Posao uspešno dodat!');
@@ -134,36 +121,55 @@ export default function WorkerDashboard() {
   };
 
   const handleStatusChange = async (jobId, newStatus) => {
-  try {
-    // Pronađi job da bismo imali sve podatke za PUT
-    const job = services.find((s) => s.jobId === jobId);
-    if (!job) return;
+    try {
+      // Find the job to get all its data
+      const job = services.find(j => j.jobId === jobId);
+      if (!job) {
+        throw new Error('Job not found');
+      }
 
-    await api.updateJobOrder(jobId, { ...job, status: newStatus });
+      // Update with complete job data
+      const updatedJob = {
+        ...job,
+        status: newStatus
+      };
 
-    // Optimistički update liste
-    setServices((prev) =>
-      prev.map((s) => (s.jobId === jobId ? { ...s, status: newStatus } : s))
-    );
-  } catch (err) {
-    console.error("Greška pri promeni statusa:", err);
-    alert("Greška pri promeni statusa: " + err.message);
-  }
-};
+      await api.updateJobOrder(jobId, updatedJob);
+      
+      // Update local state
+      setServices(prev => 
+        prev.map(j => 
+          j.jobId === jobId ? { ...j, status: newStatus } : j
+        )
+      );
+      
+      alert('Status uspešno ažuriran!');
+    } catch (err) {
+      console.error('Error updating status:', err);
+      alert('Greška pri ažuriranju statusa: ' + err.message);
+    }
+  };
 
-const handleDeleteJob = async (jobId) => {
-  if (!window.confirm("Da li ste sigurni da želite da obrišete ovaj posao?")) return;
-  try {
-    await api.deleteJobOrder(jobId);
-    setServices((prev) => prev.filter((s) => s.jobId !== jobId));
-  } catch (err) {
-    console.error("Greška pri brisanju:", err);
-    alert("Greška pri brisanju posla: " + err.message);
-  }
-};
+  const handleDelete = async (jobId) => {
+    if (!confirm('Da li ste sigurni da želite da obrišete ovaj posao?')) {
+      return;
+    }
+    
+    try {
+      await api.deleteJobOrder(jobId);
+      
+      // Remove from local state
+      setServices(prev => prev.filter(job => job.jobId !== jobId));
+      
+      alert('Posao uspešno obrisan!');
+    } catch (err) {
+      console.error('Error deleting job:', err);
+      alert('Greška pri brisanju posla: ' + err.message);
+    }
+  };
 
-  // Show loading while checking auth
-  if (authLoading || !workerData) {
+  // Show loading while fetching data
+  if (!workerData) {
     return (
       <div className="min-h-screen bg-[#121418] flex items-center justify-center">
         <div className="text-center">
@@ -180,7 +186,6 @@ const handleDeleteJob = async (jobId) => {
       
       <main className="flex-1 p-6 lg:p-10">
         <div className="max-w-6xl mx-auto">
-          {/* Quick Actions Bar */}
           <div className="mb-6 flex justify-between items-center">
             <div className="text-white">
               <h1 className="text-2xl font-bold">Dobrodošli, {workerData.firstName}!</h1>
@@ -194,20 +199,17 @@ const handleDeleteJob = async (jobId) => {
             </Link>
           </div>
 
-          {/* Worker Profile Section */}
           <WorkerProfile 
             data={workerData} 
             onUpdate={handleProfileUpdate}
           />
 
-          {/* Error Message */}
           {error && (
             <div className="mt-6 bg-red-500/20 border border-red-500 rounded-lg p-4">
               <p className="text-red-500">{error}</p>
             </div>
           )}
 
-          {/* Services Section */}
           <div className="mt-10">
             {isLoading ? (
               <div className="bg-[#1e2028] rounded-2xl p-8 border border-gray-700 text-center">
@@ -217,9 +219,9 @@ const handleDeleteJob = async (jobId) => {
             ) : (
               <ServicesTable 
                 services={services}
-  onAddService={handleAddService}
-  onStatusChange={handleStatusChange}
-  onDelete={handleDeleteJob}
+                onAddService={handleAddService}
+                onStatusChange={handleStatusChange}
+                onDelete={handleDelete}
               />
             )}
           </div>
@@ -228,7 +230,6 @@ const handleDeleteJob = async (jobId) => {
 
       <Footer />
 
-      {/* Add Job Modal */}
       <AddJobModal
         isOpen={isModalOpen}
         onClose={handleModalClose}

@@ -83,11 +83,11 @@ class ApiService {
   }
 
   async rateCraftsman(craftsmanId, rating) {
-  return this.request(`/craftsmen/${craftsmanId}/rate`, {
-    method: 'POST',
-    body: JSON.stringify({ rating }),
-  });
-}
+    return this.request(`/craftsmen/${craftsmanId}/rate`, {
+      method: 'POST',
+      body: JSON.stringify({ rating }),
+    });
+  }
 
   // Job Orders endpoints
   async getJobOrdersByCraftsman(craftsmanId) {
@@ -111,6 +111,24 @@ class ApiService {
   async deleteJobOrder(id) {
     return this.request(`/joborders/${id}`, {
       method: 'DELETE',
+    });
+  }
+
+  async getUserProfile(id) {
+    return this.request(`/users/${id}`);
+  }
+
+async getJobOrdersByUser(userId) {
+    return this.request(`/joborders/user/${userId}`);
+  }
+
+async updateUser(id, userData) {
+    return this.request(`/users/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        ...userData,
+        userId: id
+      }),
     });
   }
 }
