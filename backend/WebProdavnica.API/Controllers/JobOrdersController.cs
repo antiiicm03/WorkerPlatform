@@ -31,7 +31,7 @@ namespace WebProdavnica.API.Controllers
                     TotalPrice = request.TotalPrice,
                     UserId = request.UserId,
                     CraftsmanId = request.CraftsmanId,
-                    Status = request.Status,
+                    Status = request.Status ?? "zakazano",
                 };
 
                 bool success = _jobOrderService.Add(newJobOrder);

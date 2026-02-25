@@ -43,8 +43,7 @@ export default function Navbar() {
       <nav className="hidden md:flex gap-8 items-center">
         <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">Home</Link>
         <Link to="/about" className="text-gray-300 hover:text-white font-medium transition-colors">About Us</Link>
-        <Link to="/users" className="text-gray-300 hover:text-white font-medium transition-colors">For Users</Link>
-        <Link to="/workers/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">For Workers</Link>
+        <Link to="/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">Dashboard</Link>
         <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">Contact Us</Link>
 
         {isLoggedIn ? (
@@ -72,29 +71,10 @@ export default function Navbar() {
                 </div>
 
                 <div className="py-1">
-                  {isCraftsman ? (
-                    <>
-                      <Link to="/workers/dashboard" onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
-                        <ClipboardList className="w-4 h-4" /> Dashboard
-                      </Link>
-                      <Link to="/workers/chat" onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
-                        <MessageSquare className="w-4 h-4" /> Poruke
-                      </Link>
-                    </>
-                  ) : (
-                    <>
-                      <Link to="/my-orders" onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
-                        <ClipboardList className="w-4 h-4" /> Moje porudžbine
-                      </Link>
-                      <Link to="/workers/chat" onClick={() => setIsDropdownOpen(false)}
-                        className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
-                        <MessageSquare className="w-4 h-4" /> Poruke
-                      </Link>
-                    </>
-                  )}
+                  <Link to="/dashboard" onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
+                    <ClipboardList className="w-4 h-4" /> Dashboard
+                  </Link>
                   <Link to="/profile/settings" onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
                     <Settings className="w-4 h-4" /> Podešavanja naloga
@@ -136,8 +116,8 @@ export default function Navbar() {
         <nav className="flex flex-col gap-6 p-8 pt-24">
           <Link to="/" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Home</Link>
           <Link to="/about" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">About Us</Link>
-          <Link to="/users" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">For Users</Link>
-          <Link to="/workers" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">For Workers</Link>
+          <Link to="/users/dashboard" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">For Users</Link>
+          <Link to="/workers/dashboard" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">For Workers</Link>
           <Link to="/contact" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Contact Us</Link>
 
           <div className="pt-4 border-t border-gray-700">
