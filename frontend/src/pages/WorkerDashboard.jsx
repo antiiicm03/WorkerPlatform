@@ -133,6 +133,35 @@ export default function WorkerDashboard() {
     }
   };
 
+  const handleStatusChange = async (jobId, newStatus) => {
+  try {
+    // Pronađi job da bismo imali sve podatke za PUT
+    const job = services.find((s) => s.jobId === jobId);
+    if (!job) return;
+
+    await api.updateJobOrder(jobId, { ...job, status: newStatus });
+
+    // Optimistički update liste
+    setServices((prev) =>
+      prev.map((s) => (s.jobId === jobId ? { ...s, status: newStatus } : s))
+    );
+  } catch (err) {
+    console.error("Greška pri promeni statusa:", err);
+    alert("Greška pri promeni statusa: " + err.message);
+  }
+};
+
+const handleDeleteJob = async (jobId) => {
+  if (!window.confirm("Da li ste sigurni da želite da obrišete ovaj posao?")) return;
+  try {
+    await api.deleteJobOrder(jobId);
+    setServices((prev) => prev.filter((s) => s.jobId !== jobId));
+  } catch (err) {
+    console.error("Greška pri brisanju:", err);
+    alert("Greška pri brisanju posla: " + err.message);
+  }
+};
+
   // Show loading while checking auth
   if (authLoading || !workerData) {
     return (
@@ -188,7 +217,9 @@ export default function WorkerDashboard() {
             ) : (
               <ServicesTable 
                 services={services}
-                onAddService={handleAddService}
+  onAddService={handleAddService}
+  onStatusChange={handleStatusChange}
+  onDelete={handleDeleteJob}
               />
             )}
           </div>
