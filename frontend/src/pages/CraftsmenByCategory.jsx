@@ -114,8 +114,8 @@ const HireModal = ({ craftsman, onClose, navigate }) => {
   };
 
   const handleChat = () => {
-    navigate('/workers/chat');
-  };
+  navigate(`/chat?craftsmanId=${craftsman.craftsmanId}&craftsmanName=${encodeURIComponent(craftsman.firstName + ' ' + craftsman.lastName)}`);
+};
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
