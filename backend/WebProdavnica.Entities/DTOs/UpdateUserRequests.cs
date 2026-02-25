@@ -1,23 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebProdavnica.Entities.DTOs
 {
     public class UpdateProfileRequest
     {
+        [Required(ErrorMessage = "Ime je obavezno")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ime mora imati između 2 i 50 karaktera")]
+        [RegularExpression(@"^[a-zA-ZčćđšžČĆĐŠŽ\s]+$", ErrorMessage = "Ime sme sadržati samo slova")]
         public string FirstName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Prezime je obavezno")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Prezime mora imati između 2 i 50 karaktera")]
+        [RegularExpression(@"^[a-zA-ZčćđšžČĆĐŠŽ\s]+$", ErrorMessage = "Prezime sme sadržati samo slova")]
         public string LastName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Email je obavezan")]
+        [EmailAddress(ErrorMessage = "Email nije u ispravnom formatu")]
+        [StringLength(100, ErrorMessage = "Email ne sme biti duži od 100 karaktera")]
         public string Email { get; set; } = string.Empty;
+
+        [RegularExpression(@"^(\+381|0)[0-9]{8,9}$", ErrorMessage = "Telefon mora biti u formatu +381XXXXXXXXX ili 0XXXXXXXXX")]
         public string Phone { get; set; } = string.Empty;
+
+        [StringLength(100, ErrorMessage = "Lokacija ne sme biti duža od 100 karaktera")]
         public string Location { get; set; } = string.Empty;
     }
 
     public class UpdatePasswordRequest
     {
+        [Required(ErrorMessage = "Stara lozinka je obavezna")]
         public string OldPassword { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Nova lozinka je obavezna")]
+        [StringLength(100, MinimumLength = 8, ErrorMessage = "Lozinka mora imati najmanje 8 karaktera")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$",
+            ErrorMessage = "Lozinka mora sadržati bar jedno veliko slovo, malo slovo i broj")]
         public string NewPassword { get; set; } = string.Empty;
     }
 }

@@ -18,7 +18,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState([]);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -42,25 +42,24 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors([]);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Lozinke se ne poklapaju!');
+      setErrors(['Lozinke se ne poklapaju!']);
       return;
     }
     if (!formData.agreeToTerms) {
-      setError('Morate prihvatiti uslove korišćenja');
+      setErrors(['Morate prihvatiti uslove korišćenja']);
       return;
     }
     if (formData.userType === 'worker' && !formData.profession) {
-      setError('Molimo izaberite profesiju');
+      setErrors(['Molimo izaberite profesiju']);
       return;
     }
 
     setLoading(true);
-    setError(null);
 
     try {
-      // Koristimo direktno firstName i lastName
       const firstName = formData.firstName.trim();
       const lastName = formData.lastName.trim();
 
@@ -101,14 +100,18 @@ const Register = () => {
       const json = await response.json();
 
       if (!response.ok || !json.success) {
-        throw new Error(json.message || 'Registracija nije uspela');
+        if (json.errors) {
+          setErrors(Object.values(json.errors).flat());
+        } else {
+          setErrors([json.message || 'Registracija nije uspela']);
+        }
+        setLoading(false);
+        return;
       }
 
       const data = json.data;
-
       login(data);
 
-      // Redirekcija na osnovu role
       if (data.role === 'Craftsman') {
         navigate('/workers/dashboard');
       } else {
@@ -116,7 +119,7 @@ const Register = () => {
       }
 
     } catch (err) {
-      setError(err.message);
+      setErrors(['Greška pri povezivanju sa serverom. Pokušajte ponovo.']);
     } finally {
       setLoading(false);
     }
@@ -136,14 +139,22 @@ const Register = () => {
               <p className="text-gray-300">Join Majstorija and get started today</p>
             </div>
 
-            {/* Error poruka */}
-            {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/40 rounded-lg text-red-400 text-sm text-center">
-                {error}
+            {/* Error poruke */}
+            {errors.length > 0 && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/40 rounded-lg">
+                <p className="text-red-400 text-sm font-semibold mb-2">Molimo ispravite sledeće greške:</p>
+                <ul className="space-y-1">
+                  {errors.map((err, i) => (
+                    <li key={i} className="text-red-400 text-sm flex items-start gap-2">
+                      <span className="mt-0.5 text-red-500 flex-shrink-0">•</span>
+                      {err}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
 
               {/* User Type Toggle */}
               <div>
@@ -168,7 +179,7 @@ const Register = () => {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <User className="w-5 h-5 text-gray-400" />
                     </div>
-                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required
+                    <input type="text" name="firstName" value={formData.firstName} onChange={handleChange}
                       className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                       placeholder="First Name" />
                   </div>
@@ -179,7 +190,7 @@ const Register = () => {
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <User className="w-5 h-5 text-gray-400" />
                     </div>
-                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required
+                    <input type="text" name="lastName" value={formData.lastName} onChange={handleChange}
                       className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                       placeholder="Last Name" />
                   </div>
@@ -193,7 +204,7 @@ const Register = () => {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input type="email" name="email" value={formData.email} onChange={handleChange} required
+                  <input type="email" name="email" value={formData.email} onChange={handleChange}
                     className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     placeholder="your.email@example.com" />
                 </div>
@@ -206,7 +217,7 @@ const Register = () => {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Phone className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required
+                  <input type="tel" name="phone" value={formData.phone} onChange={handleChange}
                     className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     placeholder="+381 60 123 4567" />
                 </div>
@@ -231,7 +242,7 @@ const Register = () => {
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <MapPin className="w-5 h-5 text-gray-400" />
                       </div>
-                      <input type="text" name="location" value={formData.location} onChange={handleChange} required={isWorker}
+                      <input type="text" name="location" value={formData.location} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                         placeholder="e.g. Beograd, Novi Sad..." />
                     </div>
@@ -244,7 +255,7 @@ const Register = () => {
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
                       </div>
-                      <select name="profession" value={formData.profession} onChange={handleChange} required={isWorker}
+                      <select name="profession" value={formData.profession} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer">
                         <option value="" disabled className="bg-gray-800 text-gray-400">Select your profession</option>
                         {professions.map((p) => (
@@ -266,7 +277,7 @@ const Register = () => {
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
                       </div>
-                      <input type="number" name="experience" value={formData.experience} onChange={handleChange} required={isWorker} min="0" max="60"
+                      <input type="number" name="experience" value={formData.experience} onChange={handleChange} min="0" max="60"
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                         placeholder="e.g. 5" />
                     </div>
@@ -279,7 +290,7 @@ const Register = () => {
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <span className="text-gray-400 text-sm font-semibold">RSD</span>
                       </div>
-                      <input type="number" name="hourlyRate" value={formData.hourlyRate} onChange={handleChange} required={isWorker} min="0" step="0.01"
+                      <input type="number" name="hourlyRate" value={formData.hourlyRate} onChange={handleChange} min="0" step="0.01"
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                         placeholder="e.g. 1500" />
                     </div>
@@ -292,7 +303,7 @@ const Register = () => {
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Clock className="w-5 h-5 text-gray-400" />
                       </div>
-                      <input type="text" name="workingHours" value={formData.workingHours} onChange={handleChange} required={isWorker}
+                      <input type="text" name="workingHours" value={formData.workingHours} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                         placeholder="e.g. Mon-Fri 08:00-17:00" />
                     </div>
@@ -316,7 +327,7 @@ const Register = () => {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} required minLength="8"
+                  <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange}
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     placeholder="Create a strong password" />
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
@@ -334,7 +345,7 @@ const Register = () => {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="w-5 h-5 text-gray-400" />
                   </div>
-                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required
+                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange}
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                     placeholder="Confirm your password" />
                   <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -346,7 +357,7 @@ const Register = () => {
 
               {/* Terms */}
               <div className="flex items-start">
-                <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange} required
+                <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange}
                   className="w-4 h-4 mt-1 bg-gray-700 border-gray-600 rounded text-blue-600 focus:ring-2 focus:ring-blue-500" />
                 <label className="ml-3 text-sm text-gray-300">
                   I agree to the{' '}

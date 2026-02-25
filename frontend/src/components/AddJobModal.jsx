@@ -81,7 +81,7 @@ export default function AddJobModal({ isOpen, onClose, onSubmit, craftsmanId }) 
         </div>
 
         {/* Modal Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6" noValidate>
           {/* Error Message */}
           {error && (
             <div className="bg-red-500/20 border border-red-500 rounded-lg p-4 flex items-center gap-3">

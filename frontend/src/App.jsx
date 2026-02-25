@@ -6,19 +6,14 @@ import Register from './pages/Register';
 import BrowseTasks from './pages/BrowseTasks';
 import AboutUs from './pages/AboutUs';
 import WorkerDashboard from './pages/WorkerDashboard';
-<<<<<<< HEAD
-import WorkerChat from './pages/Chat';
 import CraftsmenByCategory from './pages/CraftsmenByCategory';
-
-=======
 import Chat from './pages/Chat';
-import CraftsmenByCategory from './pages/CraftsmenByCategory';
 import Checkout from './pages/Checkout';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import ProfileSettings from './pages/ProfileSettings';
 import CraftsmanProfile from './pages/CraftsmanProfile';
->>>>>>> ae9702df988337381ddaeab7ce8ac68dc69d941b
+
 
 function App() {
   return (

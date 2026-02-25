@@ -231,7 +231,7 @@ const HireModal = ({ craftsman, onClose, navigate }) => {
         {/* BOOK TAB */}
         {tab === 'book' && (
           <div className="p-5">
-            <form onSubmit={handleBooking} className="space-y-4">
+            <form onSubmit={handleBooking} className="space-y-4" noValidate>
               {!isLoggedIn && (
                 <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg flex items-center gap-2 text-yellow-400 text-sm">
                   <AlertTriangle className="w-4 h-4 flex-shrink-0" />
