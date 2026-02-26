@@ -11,7 +11,7 @@ export default function Main() {
                 <Text type="secondary" value="Izgradnja poverenja među komšijama čineći lokalne usluge jednostavnim, transparentnim i pouzdanim."></Text>
                 <div className="w-full gap-4 mt-5 flex items-center justify-center md:justify-normal">
                     <Button type="primary" btnText="Započni" to="/browse-tasks"></Button>
-                    <Button type="terciary" btnText="Saznaj Više"></Button>
+                    <Button type="terciary" btnText="Saznaj Više" to="/about"></Button>
                 </div>
             </div>
             <div className="flex items-center justify-center flex-1">

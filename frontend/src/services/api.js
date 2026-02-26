@@ -131,6 +131,12 @@ async updateUser(id, userData) {
       }),
     });
   }
+  async updateJobStatus(id, status) {
+  return this.request(`/joborders/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  });
+}
 }
 
 export default new ApiService();

@@ -5,7 +5,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WorkerProfile from "../components/WorkerProfile";
 import ServicesTable from "../components/ServicesTable";
-import AddJobModal from "../components/AddJobModal";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 
@@ -17,9 +16,7 @@ export default function WorkerDashboard() {
   const [services, setServices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch profile and jobs on mount
   useEffect(() => {
     if (user) {
       fetchProfile();
@@ -31,9 +28,7 @@ export default function WorkerDashboard() {
     try {
       const response = await api.getCraftsmanProfile(user.id);
       const craftsman = response.data || response;
-      
       setOriginalWorkerData(craftsman);
-      
       setWorkerData({
         craftsmanId: craftsman.craftsmanId,
         firstName: craftsman.firstName,
@@ -83,9 +78,7 @@ export default function WorkerDashboard() {
         hourlyRate: parseFloat(updatedData.hourlyRate),
         workingHours: updatedData.workingHours,
       };
-
       const response = await api.updateCraftsman(user.id, craftsmanUpdate);
-      
       if (response.success) {
         setOriginalWorkerData(craftsmanUpdate);
         setWorkerData(updatedData);
@@ -98,52 +91,12 @@ export default function WorkerDashboard() {
     }
   };
 
-  const handleAddService = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleJobSubmit = async (jobOrder) => {
-    try {
-      const response = await api.createJobOrder(jobOrder);
-      console.log('Job created:', response);
-      
-      await fetchJobs();
-      
-      alert('Posao uspešno dodat!');
-    } catch (err) {
-      console.error('Error creating job:', err);
-      throw err;
-    }
-  };
-
   const handleStatusChange = async (jobId, newStatus) => {
     try {
-      // Find the job to get all its data
-      const job = services.find(j => j.jobId === jobId);
-      if (!job) {
-        throw new Error('Job not found');
-      }
-
-      // Update with complete job data
-      const updatedJob = {
-        ...job,
-        status: newStatus
-      };
-
-      await api.updateJobOrder(jobId, updatedJob);
-      
-      // Update local state
-      setServices(prev => 
-        prev.map(j => 
-          j.jobId === jobId ? { ...j, status: newStatus } : j
-        )
+      await api.updateJobStatus(jobId, newStatus);
+      setServices(prev =>
+        prev.map(j => j.jobId === jobId ? { ...j, status: newStatus } : j)
       );
-      
-      alert('Status uspešno ažuriran!');
     } catch (err) {
       console.error('Error updating status:', err);
       alert('Greška pri ažuriranju statusa: ' + err.message);
@@ -151,16 +104,10 @@ export default function WorkerDashboard() {
   };
 
   const handleDelete = async (jobId) => {
-    if (!confirm('Da li ste sigurni da želite da obrišete ovaj posao?')) {
-      return;
-    }
-    
+    if (!confirm('Da li ste sigurni da želite da obrišete ovaj posao?')) return;
     try {
       await api.deleteJobOrder(jobId);
-      
-      // Remove from local state
       setServices(prev => prev.filter(job => job.jobId !== jobId));
-      
       alert('Posao uspešno obrisan!');
     } catch (err) {
       console.error('Error deleting job:', err);
@@ -168,7 +115,6 @@ export default function WorkerDashboard() {
     }
   };
 
-  // Show loading while fetching data
   if (!workerData) {
     return (
       <div className="min-h-screen bg-[#121418] flex items-center justify-center">
@@ -183,7 +129,7 @@ export default function WorkerDashboard() {
   return (
     <div className="min-h-screen bg-[#121418] flex flex-col">
       <Header />
-      
+
       <main className="flex-1 p-6 lg:p-10">
         <div className="max-w-6xl mx-auto">
           <div className="mb-6 flex justify-between items-center">
@@ -199,8 +145,8 @@ export default function WorkerDashboard() {
             </Link>
           </div>
 
-          <WorkerProfile 
-            data={workerData} 
+          <WorkerProfile
+            data={workerData}
             onUpdate={handleProfileUpdate}
           />
 
@@ -217,9 +163,8 @@ export default function WorkerDashboard() {
                 <p className="text-gray-400">Učitavanje poslova...</p>
               </div>
             ) : (
-              <ServicesTable 
+              <ServicesTable
                 services={services}
-                onAddService={handleAddService}
                 onStatusChange={handleStatusChange}
                 onDelete={handleDelete}
               />
@@ -229,13 +174,6 @@ export default function WorkerDashboard() {
       </main>
 
       <Footer />
-
-      <AddJobModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        onSubmit={handleJobSubmit}
-        craftsmanId={user.id}
-      />
     </div>
   );
 }

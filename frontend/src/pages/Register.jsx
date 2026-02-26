@@ -8,8 +8,15 @@ import { useAuth } from '../context/AuthContext';
 const API_BASE = "http://localhost:5114";
 
 const professions = [
-  'Vodoinstalater', 'Električar', 'Zanatlija', 'Sklapanje nameštaja',
-  'Klima uređaj', 'Moler', 'Postavljanje TV-a', 'Auto mehaničar', 'Opšta pomoć'
+  { label: 'Vodoinstalater',      value: 'plumber' },
+  { label: 'Električar',          value: 'electrician' },
+  { label: 'Zanatlija',           value: 'handyman' },
+  { label: 'Sklapanje nameštaja', value: 'furniture assembly' },
+  { label: 'Klima uređaj',        value: 'air conditioning' },
+  { label: 'Moler',               value: 'painter' },
+  { label: 'Postavljanje TV-a',   value: 'tv mounting' },
+  { label: 'Auto mehaničar',      value: 'auto mechanic' },
+  { label: 'Opšta pomoć',         value: 'general help' },
 ];
 
 const Register = () => {
@@ -256,9 +263,11 @@ const Register = () => {
                       <select name="profession" value={formData.profession} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer">
                         <option value="" disabled className="bg-gray-800 text-gray-400">Izaberite profesiju</option>
-                        {professions.map((p) => (
-                          <option key={p} value={p.toLowerCase()} className="bg-gray-800 text-white">{p}</option>
-                        ))}
+                       {professions.map((p) => (
+                          <option key={p.value} value={p.value} className="bg-gray-800 text-white">
+                            {p.label}
+                          </option>
+                        ))} 
                       </select>
                       <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                         <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

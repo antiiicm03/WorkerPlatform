@@ -2,8 +2,15 @@ import Lottie from "lottie-react";
 import Text from "../components/Text";
 import VerifiedIcon from "../assets/lottie/Verified.json";
 import Button from "../components/Button";
+import { useAuth } from "../context/AuthContext";
 
 export default function Verified() {
+    const { user } = useAuth();
+
+    const destination = user
+        ? (user.role === 'Craftsman' ? '/workers/dashboard' : '/users/dashboard')
+        : '/register';
+
     return (
         <div className="p-5 bg-white flex flex-col justify-between items-center">
             <div className="flex-1 items-center justify-center flex">
@@ -13,7 +20,7 @@ export default function Verified() {
                 <Text type="subHeadingBlack" value="Registrujte se danas i proširite vaša iskustva."></Text>
             </div>
             <div className="my-4">
-                <Button type="primary" btnText="Saznaj Više"></Button>
+                <Button type="primary" btnText="Saznaj Više" to={destination}></Button>
             </div>
         </div>
     )

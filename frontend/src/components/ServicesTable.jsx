@@ -1,4 +1,4 @@
-import { Plus, ChevronDown, Trash2, AlertCircle } from "lucide-react";
+import { Plus, Trash2, AlertCircle, CheckCircle, XCircle, ChevronDown } from "lucide-react";
 
 const STATUS_OPTIONS = ["Zakazano", "U toku", "Završeno", "Otkazano"];
 
@@ -16,10 +16,15 @@ const SELECT_OPTION_BG = {
   "Otkazano": "#2d0f0f",
 };
 
-export default function ServicesTable({ 
-  services, 
+const normalizeStatus = (status) => {
+  if (!status) return '';
+  return status.toLowerCase().trim();
+};
+
+export default function ServicesTable({
+  services,
   onAddService,
-  onStatusChange, 
+  onStatusChange,
   onDelete,
   buttonText = "Dodaj Novi Posao",
   buttonIcon = <Plus className="w-5 h-5" />
@@ -31,34 +36,37 @@ export default function ServicesTable({
     });
   };
 
-  // Check worker dashboard / user deshboard
-  const isEditMode = !!(onStatusChange || onDelete);
+  const isPending = (status) => normalizeStatus(status) === 'zakazano';
 
   return (
     <div className="bg-[#1e2028] rounded-2xl p-6 lg:p-8 border border-gray-700">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-white">Evidencija Servisa</h2>
-        <button
-          onClick={onAddService}
-          className="flex items-center gap-2 px-6 py-3 bg-[#2324fe] text-white rounded-lg hover:bg-[#1a1bca] transition"
-        >
-          {buttonIcon}
-          {buttonText}
-        </button>
-      </div>
-
-      {/* Table */}
-      {services.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg mb-4">Nema poslova za prikaz</p>
+        {onAddService && (
           <button
             onClick={onAddService}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#2324fe] text-white rounded-lg hover:bg-[#1a1bca] transition"
+            className="flex items-center gap-2 px-6 py-3 bg-[#2324fe] text-white rounded-lg hover:bg-[#1a1bca] transition"
           >
             {buttonIcon}
             {buttonText}
           </button>
+        )}
+      </div>
+
+      {/* Empty state */}
+      {services.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-400 text-lg mb-4">Nema poslova za prikaz</p>
+          {onAddService && (
+            <button
+              onClick={onAddService}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#2324fe] text-white rounded-lg hover:bg-[#1a1bca] transition"
+            >
+              {buttonIcon}
+              {buttonText}
+            </button>
+          )}
         </div>
       ) : (
         <div className="overflow-x-auto">
@@ -71,6 +79,9 @@ export default function ServicesTable({
                 <th className="text-left text-gray-400 font-semibold py-3 px-4">Status</th>
                 <th className="text-left text-gray-400 font-semibold py-3 px-4">Hitno</th>
                 <th className="text-right text-gray-400 font-semibold py-3 px-4">Cena</th>
+                {onStatusChange && (
+                  <th className="text-center text-gray-400 font-semibold py-3 px-4">Akcija</th>
+                )}
                 {onDelete && (
                   <th className="text-center text-gray-400 font-semibold py-3 px-4">Obriši</th>
                 )}
@@ -88,14 +99,13 @@ export default function ServicesTable({
                   <td className="py-4 px-4">
                     <span className="text-gray-300">{formatDate(service.scheduledDate)}</span>
                   </td>
-                  <td className="py-4 px-4">
+                  <td className="py-4 px-4 max-w-[200px]">
                     <span className="text-white">{service.jobDescription || 'Bez opisa'}</span>
                   </td>
 
                   {/* Status */}
                   <td className="py-4 px-4">
-                    {onStatusChange ? (
-                      // Editable status dropdown for workers
+                    {onStatusChange && !isPending(service.status) ? (
                       <div className="relative inline-flex">
                         <select
                           value={service.status}
@@ -108,7 +118,7 @@ export default function ServicesTable({
                             ${STATUS_STYLES[service.status] || "bg-gray-700/30 text-gray-300 border-gray-600"}
                           `}
                         >
-                          {STATUS_OPTIONS.map((s) => (
+                          {STATUS_OPTIONS.filter(s => s !== 'Zakazano').map((s) => (
                             <option
                               key={s}
                               value={s}
@@ -118,20 +128,10 @@ export default function ServicesTable({
                             </option>
                           ))}
                         </select>
-                        <ChevronDown
-                          className={`
-                            pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5
-                            ${(STATUS_STYLES[service.status] || "").includes("blue") ? "text-blue-400"
-                              : (STATUS_STYLES[service.status] || "").includes("yellow") ? "text-yellow-400"
-                              : (STATUS_STYLES[service.status] || "").includes("green") ? "text-green-400"
-                              : (STATUS_STYLES[service.status] || "").includes("red") ? "text-red-400"
-                              : "text-gray-400"}
-                          `}
-                        />
+                        <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
                       </div>
                     ) : (
-                      // Read-only status badge for users
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_STYLES[service.status] || "bg-gray-700/30 text-gray-300"}`}>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium border ${STATUS_STYLES[service.status] || "bg-gray-700/30 text-gray-300 border-gray-600"}`}>
                         {service.status}
                       </span>
                     )}
@@ -150,6 +150,34 @@ export default function ServicesTable({
                   <td className="py-4 px-4 text-right">
                     <span className="text-white font-semibold">{service.totalPrice.toLocaleString()} RSD</span>
                   </td>
+
+                  {/* Prihvati / Odbij — samo za zakazano */}
+                  {onStatusChange && (
+                    <td className="py-4 px-4 text-center">
+                      {isPending(service.status) ? (
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            onClick={() => onStatusChange(service.jobId, 'U toku')}
+                            title="Prihvati posao"
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-green-600/20 hover:bg-green-600 text-green-400 hover:text-white border border-green-500/40 rounded-lg text-xs font-semibold transition-all"
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                            Prihvati
+                          </button>
+                          <button
+                            onClick={() => onStatusChange(service.jobId, 'Otkazano')}
+                            title="Odbij posao"
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600/20 hover:bg-red-600 text-red-400 hover:text-white border border-red-500/40 rounded-lg text-xs font-semibold transition-all"
+                          >
+                            <XCircle className="w-4 h-4" />
+                            Odbij
+                          </button>
+                        </div>
+                      ) : (
+                        <span className="text-gray-600 text-xs">—</span>
+                      )}
+                    </td>
+                  )}
 
                   {onDelete && (
                     <td className="py-4 px-4 text-center">
