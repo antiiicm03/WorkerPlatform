@@ -13,35 +13,35 @@ const AboutUs = () => {
         
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-white mb-6">
-            About Majstorija
+            O Majstoriji
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Connecting communities through trusted local services since 2026
+            Povezujemo zajednice kroz pouzdane lokalne usluge od 2026. godine
           </p>
         </div>
 
         
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-gray-700 mb-12">
-          <h2 className="text-3xl font-bold text-white mb-6">Our Story</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">Naša Priča</h2>
           <p className="text-gray-300 leading-relaxed mb-4">
-            Founded in 2026, Majstorija was born from a simple observation: finding reliable, trustworthy local service providers shouldn't be complicated. We recognized that everyday people struggle to connect with skilled workers for home repairs, maintenance, and various tasks, while talented professionals often find it challenging to reach potential clients.
+            Osnovana 2026. godine, Majstorija je nastala iz jednostavne opservacije: pronalaženje pouzdanih lokalnih servisera ne bi trebalo da bude komplikovano. Uočili smo da obični ljudi često imaju poteškoća da pronađu kvalifikovane radnike za popravke, održavanje i razne zadatke, dok talentovani profesionalci teško dopiru do potencijalnih klijenata.
           </p>
           <p className="text-gray-300 leading-relaxed mb-4">
-            Our platform bridges this gap by creating a transparent, secure marketplace where users can easily find and hire verified local workers for any task, big or small. Whether you need a plumber, electrician, handyman, or help with furniture assembly, Majstorija makes the process simple and reliable.
+            Naša platforma premošćava ovaj jaz stvaranjem transparentnog i sigurnog tržišta gde korisnici lako mogu pronaći i angažovati proverene lokalne radnike za bilo koji zadatak, mali ili veliki. Bilo da vam treba vodoinstalater, električar, majstor ili pomoć pri sklapanju nameštaja, Majstorija čini proces jednostavnim i pouzdanim.
           </p>
         </div>
 
        
         <div className="mb-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">What We Do</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Šta Radimo</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
               <div className="w-16 h-16 bg-blue-600/20 rounded-xl flex items-center justify-center mb-6">
                 <Users className="w-8 h-8 text-blue-400" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">For Users</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Za Korisnike</h3>
               <p className="text-gray-300 leading-relaxed">
-                We help you find qualified professionals for any home or office task. Post your job, receive offers from verified workers, compare profiles and reviews, and choose the best person for the job—all in one place.
+                Pomažemo vam da pronađete kvalifikovane profesionalce za bilo koji kućni ili poslovni zadatak. Objavite svoj posao, primajte ponude od proverenih radnika, uporedite profile i recenzije i izaberite najboljeg za posao—sve na jednom mestu.
               </p>
             </div>
 
@@ -49,9 +49,9 @@ const AboutUs = () => {
               <div className="w-16 h-16 bg-blue-600/20 rounded-xl flex items-center justify-center mb-6">
                 <Wrench className="w-8 h-8 text-blue-400" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">For Workers</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">Za Radnike</h3>
               <p className="text-gray-300 leading-relaxed">
-                We provide skilled professionals with a platform to grow their business, connect with clients who need their services, build their reputation through reviews, and manage their work schedule efficiently.
+                Omogućavamo kvalifikovanim profesionalcima platformu da razviju svoj posao, povežu se sa klijentima kojima su potrebne njihove usluge, grade reputaciju kroz recenzije i efikasno upravljaju svojim rasporedom.
               </p>
             </div>
           </div>
@@ -59,15 +59,15 @@ const AboutUs = () => {
 
        
         <div className="bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-blue-500/30 mb-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">How Majstorija Helps Everyday Life</h2>
+          <h2 className="text-3xl font-bold text-white mb-8 text-center">Kako Majstorija Pomaže U Svakodnevnom Životu</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Saves Time</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Štedi Vreme</h3>
               <p className="text-gray-300">
-                No more endless searching or unreliable contacts. Find the right professional quickly and efficiently.
+                Nema više beskonačnog traženja ili nepouzdanih kontakata. Pronađite pravog profesionalca brzo i efikasno.
               </p>
             </div>
 
@@ -75,9 +75,9 @@ const AboutUs = () => {
               <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Builds Trust</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Gradi Poverenje</h3>
               <p className="text-gray-300">
-                Verified workers, transparent reviews, and secure payments create a safe environment for everyone.
+                Provereni radnici, transparentne recenzije i sigurni načini plaćanja stvaraju bezbedno okruženje za sve.
               </p>
             </div>
 
@@ -85,9 +85,9 @@ const AboutUs = () => {
               <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-6 h-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">Supports Local</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Podržava Lokalno</h3>
               <p className="text-gray-300">
-                Strengthens local communities by connecting neighbors with skilled professionals nearby.
+                Jača lokalne zajednice povezivanjem komšija sa kvalifikovanim profesionalcima u okolini.
               </p>
             </div>
           </div>
@@ -95,33 +95,33 @@ const AboutUs = () => {
 
        
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-gray-700 mb-12">
-          <h2 className="text-3xl font-bold text-white mb-6 text-center">Who Is Majstorija For?</h2>
+          <h2 className="text-3xl font-bold text-white mb-6 text-center">Za Koga Je Majstorija?</h2>
           <p className="text-gray-300 leading-relaxed text-center max-w-3xl mx-auto mb-8">
-            Majstorija is designed for everyone who needs help with tasks or wants to offer their professional services:
+            Majstorija je dizajnirana za sve koji trebaju pomoć sa zadacima ili žele da ponude svoje profesionalne usluge:
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gray-700/30 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-3">Homeowners & Renters</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Vlasnici Kuća & Stanari</h3>
               <p className="text-gray-300">
-                Anyone who needs repairs, installations, or maintenance around the house.
+                Svako kome su potrebne popravke, instalacije ili održavanje u kući.
               </p>
             </div>
             <div className="bg-gray-700/30 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-3">Busy Professionals</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Zaposleni Profesionalci</h3>
               <p className="text-gray-300">
-                People who don't have time to handle household tasks themselves.
+                Ljudi koji nemaju vremena da sami obavljaju kućne zadatke.
               </p>
             </div>
             <div className="bg-gray-700/30 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-3">Small Businesses</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Mali Biznisi</h3>
               <p className="text-gray-300">
-                Companies that need quick access to reliable service providers.
+                Kompanije kojima je potreban brz pristup pouzdanim servisima.
               </p>
             </div>
             <div className="bg-gray-700/30 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-white mb-3">Skilled Workers</h3>
+              <h3 className="text-xl font-bold text-white mb-3">Kvalifikovani Radnici</h3>
               <p className="text-gray-300">
-                Professionals looking to expand their client base and grow their business.
+                Profesionalci koji žele da prošire bazu klijenata i razviju svoj posao.
               </p>
             </div>
           </div>
@@ -131,14 +131,14 @@ const AboutUs = () => {
         <div className="bg-gradient-to-r from-blue-600/20 to-blue-800/20 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-blue-500/30 text-center">
           <MessageCircle className="w-16 h-16 text-blue-400 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-white mb-4">
-            Need Help or Have Questions?
+            Treba Vam Pomoć Ili Imate Pitanja?
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Our support team is here to assist you. Feel free to reach out anytime.
+            Naš tim za podršku je ovde da vam pomogne. Slobodno nas kontaktirajte u bilo koje vreme.
           </p>
           <Link to="/contact">
             <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-all transform hover:scale-105">
-              Contact Our Service
+              Kontaktirajte Naš Servis
             </button>
           </Link>
         </div>

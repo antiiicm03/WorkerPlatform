@@ -20,13 +20,13 @@ export default function WorkWithUsSection() {
             <div className="p-10 mt-10 gap-10 grid md:grid-cols-3">
                 <Card image={plumber} heading="Vodoinstalater" />
                 <Card image={workerTwo} heading="Elektricar" />
-                <Card image={workerThree} heading="Cistac" />
+                <Card image={workerThree} heading="Zanatlija" />
                 <Card image={workerFour} heading="Moler" />
-                <Card image={workerFive} heading="Keramicar" />
-                <Card image={workerSix} heading="Stolar" />
-                <Card image={workerSeven} heading="Bravar" />
-                <Card image={workerEight} heading="Limар" />
-                <Card image={workerNine} heading="Automehanicar" />
+                <Card image={workerFive} heading="Postavljanje TV-a" />
+                <Card image={workerSix} heading="Auto mehaničar" />
+                <Card image={workerSeven} heading="Opšta pomoć" />
+                <Card image={workerEight} heading="Klima uređaji" />
+                <Card image={workerNine} heading="Sklapanje nameštaja" />
             </div>
         </main>
     );

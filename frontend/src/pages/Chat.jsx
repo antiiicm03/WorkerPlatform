@@ -6,7 +6,7 @@ import { useAuth } from "../context/AuthContext";
 
 const API_BASE = "http://localhost:5114";
 
-// ─── MODAL ZA NOVU PORUKU ────────────────────────────────────────────────────
+// MODAL ZA NOVU PORUKU
 const NewMessageModal = ({ onClose, onSelect, headers }) => {
   const [craftsmen, setCraftsmen] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -133,7 +133,7 @@ const NewMessageModal = ({ onClose, onSelect, headers }) => {
   );
 };
 
-// ─── MAIN CHAT KOMPONENTA ────────────────────────────────────────────────────
+// MAIN CHAT KOMPONENTA
 export default function Chat() {
   const { user } = useAuth();
   const navigate = useNavigate();

@@ -46,7 +46,7 @@ namespace WebProdavnica.Entities.DTOs
         [Range(0, 60, ErrorMessage = "Iskustvo mora biti između 0 i 60 godina")]
         public int Experience { get; set; }
 
-        [Range(100, 100000, ErrorMessage = "Cena po satu mora biti između 100 i 100,000 RSD")]
+        [Range(0, 100000, ErrorMessage = "Cena po satu mora biti između 0 i 100,000 RSD")]
         public decimal HourlyRate { get; set; }
 
         [Required(ErrorMessage = "Radno vreme je obavezno")]

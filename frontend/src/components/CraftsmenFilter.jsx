@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp, X, SlidersHorizontal } from 'lucide-react';
 
-// ─── Accordion Section ───────────────────────────────────────────────────────
 const Section = ({ title, children, defaultOpen = true }) => {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -23,7 +22,6 @@ const Section = ({ title, children, defaultOpen = true }) => {
   );
 };
 
-// ─── Checkbox Option ─────────────────────────────────────────────────────────
 const CheckOption = ({ label, checked, onChange }) => (
   <label className="flex items-center gap-3 py-1.5 cursor-pointer group">
     <span className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-all
@@ -44,10 +42,9 @@ const CheckOption = ({ label, checked, onChange }) => (
   </label>
 );
 
-// ─── Star Rating Selector ────────────────────────────────────────────────────
 const StarSelector = ({ value, onChange }) => {
   const options = [0, 3, 3.5, 4, 4.5];
-  const labels = ['Any', '3+', '3.5+', '4+', '4.5+'];
+  const labels = ['Sve', '3+', '3.5+', '4+', '4.5+'];
   return (
     <div className="flex flex-wrap gap-2">
       {options.map((opt, i) => (
@@ -67,11 +64,10 @@ const StarSelector = ({ value, onChange }) => {
   );
 };
 
-// ─── MAIN FILTER COMPONENT ───────────────────────────────────────────────────
 const CraftsmenFilter = ({ filters, onChange, onReset, hasActiveFilters }) => {
   const [priceInputFrom, setPriceInputFrom] = useState(filters.maxPrice ? '0' : '');
-  const [priceInputTo, setPriceInputTo]     = useState(filters.maxPrice || '');
-  const [sliderMax, setSliderMax]           = useState(filters.maxPrice || 10000);
+  const [priceInputTo, setPriceInputTo] = useState(filters.maxPrice || '');
+  const [sliderMax, setSliderMax] = useState(filters.maxPrice || 10000);
 
   const ABSOLUTE_MAX = 20000;
 
@@ -122,7 +118,7 @@ const CraftsmenFilter = ({ filters, onChange, onReset, hasActiveFilters }) => {
       </div>
 
       <div className="px-5">
-        {/* ── LOKACIJA ── */}
+        {/* LOKACIJA */}
         <Section title="Lokacija">
           <input
             type="text"
@@ -134,7 +130,7 @@ const CraftsmenFilter = ({ filters, onChange, onReset, hasActiveFilters }) => {
           />
         </Section>
 
-        {/* ── CENA ── */}
+        {/* CENA */}
         <Section title="Cena (RSD/sat)">
           <div className="flex gap-3 mb-4">
             <div className="flex-1">
@@ -161,7 +157,6 @@ const CraftsmenFilter = ({ filters, onChange, onReset, hasActiveFilters }) => {
             </div>
           </div>
 
-          {/* Dual-handle style slider (single handle for max) */}
           <div className="relative mb-4 px-1">
             <input
               type="range"
@@ -203,7 +198,7 @@ const CraftsmenFilter = ({ filters, onChange, onReset, hasActiveFilters }) => {
           </button>
         </Section>
 
-        {/* ── OCENA ── */}
+        {/* OCENA */}
         <Section title="Minimalna ocena">
           <StarSelector
             value={filters.minRating}
@@ -216,7 +211,7 @@ const CraftsmenFilter = ({ filters, onChange, onReset, hasActiveFilters }) => {
           )}
         </Section>
 
-        {/* ── DOSTUPNOST ── */}
+        {/* DOSTUPNOST */}
         <Section title="Dostupnost" defaultOpen={true}>
           <CheckOption
             label="Hitne intervencije (0-24h)"

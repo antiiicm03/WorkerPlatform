@@ -22,7 +22,7 @@ namespace WebProdavnica.Entities.DTOs
 
         public bool Urgent { get; set; }
 
-        [Range(0.01, 10000000, ErrorMessage = "Cena mora biti pozitivan broj")]
+        [Range(0.00, 10000000, ErrorMessage = "Cena mora biti pozitivan broj")]
         public decimal TotalPrice { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "UserId mora biti validan")]
