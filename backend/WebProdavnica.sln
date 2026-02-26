@@ -3,29 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.API", "WebProdavnica.API\WebProdavnica.API.csproj", "{7BC8D294-0F77-427E-8CDF-935D881B078C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.API", "WebProdavnica.API\WebProdavnica.API.csproj", "{7BC8D294-0F77-427E-8CDF-935D881B078C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.BusinessLayer", "WebProdavnica.BusinessLayer\WebProdavnica.BusinessLayer.csproj", "{9620E4D1-3E33-4E18-8E64-8E203B0D66A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.BusinessLayer", "WebProdavnica.BusinessLayer\WebProdavnica.BusinessLayer.csproj", "{9620E4D1-3E33-4E18-8E64-8E203B0D66A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.Core", "WebProdavnica.Core\WebProdavnica.Core.csproj", "{AE7B5713-F8B7-4236-8F75-A4B02E31BD28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.Core", "WebProdavnica.Core\WebProdavnica.Core.csproj", "{AE7B5713-F8B7-4236-8F75-A4B02E31BD28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.DAL", "WebProdavnica.DAL\WebProdavnica.DAL.csproj", "{7C5A5A86-7A21-4F5C-B728-AEA9F005774F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.DAL", "WebProdavnica.DAL\WebProdavnica.DAL.csproj", "{7C5A5A86-7A21-4F5C-B728-AEA9F005774F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.Entities", "WebProdavnica.Entities\WebProdavnica.Entities.csproj", "{97DEA7DA-E187-403C-9631-C0950D5C9798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.Entities", "WebProdavnica.Entities\WebProdavnica.Entities.csproj", "{97DEA7DA-E187-403C-9631-C0950D5C9798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.TestConsole", "WebProdavnica.TestConsole\WebProdavnica.TestConsole.csproj", "{21DFD3B1-949F-4349-B45C-8B091369F406}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.TestConsole", "WebProdavnica.TestConsole\WebProdavnica.TestConsole.csproj", "{21DFD3B1-949F-4349-B45C-8B091369F406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.UnitTest", "WebProdavnica.UnitTest\WebProdavnica.UnitTest.csproj", "{92BF0B05-BFBB-477F-9743-4051F7471908}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebProdavnica.WebApp", "WebProdavnica.WebApp\WebProdavnica.WebApp.csproj", "{33B32B1F-A570-4DEA-A103-710B0233D2E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebProdavnica.UnitTest", "WebProdavnica.UnitTest\WebProdavnica.UnitTest.csproj", "{92BF0B05-BFBB-477F-9743-4051F7471908}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7BC8D294-0F77-427E-8CDF-935D881B078C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -56,9 +51,11 @@ Global
 		{92BF0B05-BFBB-477F-9743-4051F7471908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92BF0B05-BFBB-477F-9743-4051F7471908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92BF0B05-BFBB-477F-9743-4051F7471908}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33B32B1F-A570-4DEA-A103-710B0233D2E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33B32B1F-A570-4DEA-A103-710B0233D2E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33B32B1F-A570-4DEA-A103-710B0233D2E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33B32B1F-A570-4DEA-A103-710B0233D2E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81CDDF6D-91D2-417B-A105-AA3148A2CFC1}
 	EndGlobalSection
 EndGlobal
