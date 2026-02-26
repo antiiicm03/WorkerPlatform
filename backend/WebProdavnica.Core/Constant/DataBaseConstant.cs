@@ -10,6 +10,6 @@ namespace WebProdavnica.Core.Constant
 
     public static class DataBaseConstant
     {
-        public const string ConnectionString = "Data Source=ALEKSANDAR\\SQLEXPRESS;Initial Catalog=Majsotrijalocal;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        public const string ConnectionString = "Data Source=DESKTOP-O0QNST7\\SQLEXPRESS;Initial Catalog=majstorija-local;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
     }
 }
