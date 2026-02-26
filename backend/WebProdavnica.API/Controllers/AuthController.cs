@@ -15,14 +15,12 @@ namespace WebProdavnica.Controllers
             _authService = authService;
         }
 
-        // POST: api/auth/register/user
         [HttpPost("register/user")]
         public IActionResult RegisterUser([FromBody] RegisterUserRequest request)
         {
             try
             {
                 var result = _authService.RegisterUser(request);
-
                 if (result == null)
                 {
                     return BadRequest(new
@@ -31,7 +29,6 @@ namespace WebProdavnica.Controllers
                         message = "Email vec postoji ili registracija nije uspela"
                     });
                 }
-
                 return Ok(new
                 {
                     success = true,
@@ -44,19 +41,19 @@ namespace WebProdavnica.Controllers
                 return StatusCode(500, new
                 {
                     success = false,
-                    error = ex.Message
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message,
+                    stackTrace = ex.StackTrace
                 });
             }
         }
 
-        // POST: api/auth/register/craftsman
         [HttpPost("register/craftsman")]
         public IActionResult RegisterCraftsman([FromBody] RegisterCraftsmanRequest request)
         {
             try
             {
                 var result = _authService.RegisterCraftsman(request);
-
                 if (result == null)
                 {
                     return BadRequest(new
@@ -65,7 +62,6 @@ namespace WebProdavnica.Controllers
                         message = "Email vec postoji ili registracija nije uspela"
                     });
                 }
-
                 return Ok(new
                 {
                     success = true,
@@ -78,19 +74,19 @@ namespace WebProdavnica.Controllers
                 return StatusCode(500, new
                 {
                     success = false,
-                    error = ex.Message
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message,
+                    stackTrace = ex.StackTrace
                 });
             }
         }
 
-        // POST: api/auth/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
             try
             {
                 var result = _authService.Login(request);
-
                 if (result == null)
                 {
                     return Unauthorized(new
@@ -99,7 +95,6 @@ namespace WebProdavnica.Controllers
                         message = "Pogresan email ili lozinka"
                     });
                 }
-
                 return Ok(new
                 {
                     success = true,
@@ -112,7 +107,9 @@ namespace WebProdavnica.Controllers
                 return StatusCode(500, new
                 {
                     success = false,
-                    error = ex.Message
+                    message = ex.Message,
+                    inner = ex.InnerException?.Message,
+                    stackTrace = ex.StackTrace
                 });
             }
         }

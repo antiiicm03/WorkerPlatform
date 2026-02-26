@@ -93,6 +93,7 @@ namespace WebProdavnica.API.Controllers
 
         // PUT: api/users/5/password
         [HttpPut("{id}/password")]
+        
         public IActionResult UpdatePassword(int id, [FromBody] UpdatePasswordRequest request)
         {
             try
@@ -104,8 +105,8 @@ namespace WebProdavnica.API.Controllers
                 if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.PasswordHash))
                     return BadRequest(new { success = false, message = "Stara lozinka nije ispravna" });
 
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
-                bool success = _userService.Update(user);
+                string newHash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+                bool success = _userService.UpdatePassword(id, newHash);
 
                 if (success)
                     return Ok(new { success = true, message = "Lozinka uspešno promenjena" });
@@ -114,7 +115,7 @@ namespace WebProdavnica.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { success = false, error = ex.Message });
+                return StatusCode(500, new { success = false, message = ex.Message, inner = ex.InnerException?.Message });
             }
         }
 

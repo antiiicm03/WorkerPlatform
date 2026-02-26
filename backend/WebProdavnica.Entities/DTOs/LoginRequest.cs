@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebProdavnica.Entities.DTOs
 {
     public class LoginRequest
     {
         [Required(ErrorMessage = "Email je obavezan")]
-        [EmailAddress(ErrorMessage = "Email nije u ispravnom formatu")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}$",
+    ErrorMessage = "Email nije u ispravnom formatu (primer: ime@gmail.com)")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Lozinka je obavezna")]

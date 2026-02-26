@@ -18,15 +18,16 @@ namespace WebProdavnica.DAL.Impl
             conn.Open();
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"INSERT INTO dbo.users
-                (first_name, last_name, email, phone, password_hash, location)
-                VALUES(@fn, @ln, @e, @p, @ph, @l)";
+        (first_name, last_name, email, phone, password_hash, location, created_at)
+        VALUES(@fn, @ln, @e, @p, @ph, @l, @ca)";
 
             cmd.Parameters.AddWithValue("@fn", u.FirstName);
             cmd.Parameters.AddWithValue("@ln", u.LastName);
             cmd.Parameters.AddWithValue("@e", u.Email);
             cmd.Parameters.AddWithValue("@p", u.Phone);
             cmd.Parameters.AddWithValue("@ph", u.PasswordHash);
-            cmd.Parameters.AddWithValue("@l", u.Location);
+            cmd.Parameters.AddWithValue("@l", string.IsNullOrEmpty(u.Location) ? (object)DBNull.Value : u.Location);
+            cmd.Parameters.AddWithValue("@ca", u.CreatedAt);
 
             return cmd.ExecuteNonQuery() > 0;
         }
@@ -101,19 +102,32 @@ namespace WebProdavnica.DAL.Impl
 
             SqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"UPDATE dbo.users SET
-                first_name=@fn, last_name=@ln, email=@e, phone=@p, location=@l,
-                refresh_token=@rt, refresh_token_expiry=@rte
-                WHERE user_id=@id";
+        first_name=@fn, last_name=@ln, email=@e, phone=@p, location=@l,
+        password_hash=@ph,
+        refresh_token=@rt, refresh_token_expiry=@rte
+        WHERE user_id=@id";
 
             cmd.Parameters.AddWithValue("@fn", u.FirstName);
             cmd.Parameters.AddWithValue("@ln", u.LastName);
             cmd.Parameters.AddWithValue("@e", u.Email);
             cmd.Parameters.AddWithValue("@p", u.Phone);
-            cmd.Parameters.AddWithValue("@l", u.Location);
+            cmd.Parameters.AddWithValue("@l", string.IsNullOrEmpty(u.Location) ? (object)DBNull.Value : u.Location);
+            cmd.Parameters.AddWithValue("@ph", u.PasswordHash);
             cmd.Parameters.AddWithValue("@rt", (object?)u.RefreshToken ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@rte", (object?)u.RefreshTokenExpiry ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@id", u.UserId);
 
+            return cmd.ExecuteNonQuery() > 0;
+        }
+
+        public bool UpdatePassword(int userId, string newPasswordHash)
+        {
+            using SqlConnection conn = new(DataBaseConstant.ConnectionString);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "UPDATE dbo.users SET password_hash=@ph WHERE user_id=@id";
+            cmd.Parameters.AddWithValue("@ph", newPasswordHash);
+            cmd.Parameters.AddWithValue("@id", userId);
             return cmd.ExecuteNonQuery() > 0;
         }
 
@@ -126,9 +140,9 @@ namespace WebProdavnica.DAL.Impl
                 FirstName = r.GetString(1),
                 LastName = r.GetString(2),
                 Email = r.GetString(3),
-                Phone = r.GetString(4),
-                PasswordHash = r.GetString(5),
-                Location = r.GetString(6),
+                Phone = r.IsDBNull(4) ? string.Empty : r.GetString(4),
+                PasswordHash = r.IsDBNull(5) ? string.Empty : r.GetString(5),
+                Location = r.IsDBNull(6) ? string.Empty : r.GetString(6),
                 CreatedAt = r.GetDateTime(7),
                 RefreshToken = r.IsDBNull(8) ? null : r.GetString(8),
                 RefreshTokenExpiry = r.IsDBNull(9) ? null : r.GetDateTime(9)
