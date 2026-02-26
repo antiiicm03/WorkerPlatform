@@ -17,6 +17,7 @@ export default function Services() {
                 <Text type="heading" value="Dostupni Servisi" />
             </div>
             <div className="p-10 mt-10 gap-10 grid md:grid-cols-3">
+
                 <Card image={plumber}     heading="Vodoinstalater"   slug="plumbers" />
                 <Card image={workerTwo}   heading="Električar"        slug="electricians" />
                 <Card image={workerThree} heading="Majstor za sve"    slug="handymen" />
@@ -26,6 +27,7 @@ export default function Services() {
                 <Card image={workerSeven} heading="Montaža TV-a"      slug="tv-mounting" />
                 <Card image={workerEight} heading="Automehaničar"     slug="auto-mechanics" />
                 <Card image={workerNine}  heading="Opšta pomoć"       slug="general-help" />
+
             </div>
         </main>
     );

@@ -10,7 +10,6 @@ export default function Navbar() {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-
   const isLoggedIn = !!user;
   const isCraftsman = user?.role === 'Craftsman';
 
@@ -41,10 +40,10 @@ export default function Navbar() {
     <>
       {/* Desktop Navbar */}
       <nav className="hidden md:flex gap-8 items-center">
-        <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">Home</Link>
-        <Link to="/about" className="text-gray-300 hover:text-white font-medium transition-colors">About Us</Link>
-        <Link to="/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">Dashboard</Link>
-        <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">Contact Us</Link>
+        <Link to="/" className="text-gray-300 hover:text-white font-medium transition-colors">Početna</Link>
+        <Link to="/about" className="text-gray-300 hover:text-white font-medium transition-colors">O Nama</Link>
+        <Link to="/dashboard" className="text-gray-300 hover:text-white font-medium transition-colors">Pregled</Link>
+        <Link to="/contact" className="text-gray-300 hover:text-white font-medium transition-colors">Kontakt</Link>
 
         {isLoggedIn ? (
           <div className="relative" ref={dropdownRef}>
@@ -71,14 +70,19 @@ export default function Navbar() {
                 </div>
 
                 <div className="py-1">
+                  <Link to="/chat" onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
+                    <MessageSquare className="w-4 h-4" /> Poruke
+                  </Link>
                   <Link to="/dashboard" onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
-                    <ClipboardList className="w-4 h-4" /> Dashboard
+                    <ClipboardList className="w-4 h-4" /> Pregled
                   </Link>
                   <Link to="/profile/settings" onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-4 py-2.5 text-gray-300 hover:text-white hover:bg-gray-700 transition text-sm">
                     <Settings className="w-4 h-4" /> Podešavanja naloga
                   </Link>
+                  
                 </div>
 
                 <div className="border-t border-gray-700 py-1">
@@ -92,8 +96,8 @@ export default function Navbar() {
           </div>
         ) : (
           <>
-            <Button type="secondary" btnText="Log In" to="/login" />
-            <Button type="primary" btnText="Sign Up" to="/register" />
+            <Button type="secondary" btnText="Prijava" to="/login" />
+            <Button type="primary" btnText="Registracija" to="/register" />
           </>
         )}
       </nav>
@@ -112,13 +116,12 @@ export default function Navbar() {
       </button>
 
       {/* Mobile Menu */}
-      <div className={`fixed top-0 right-0 h-full w-72 bg-gray-900/95 backdrop-blur-lg border-l border-gray-700 transform transition-transform duration-300 ease-in-out z-40 ${isMenuOpen ? "translate-x-0" : "translate-x-full"} md:hidden`}>
-        <nav className="flex flex-col gap-6 p-8 pt-24">
-          <Link to="/" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Home</Link>
-          <Link to="/about" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">About Us</Link>
-          <Link to="/users/dashboard" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">For Users</Link>
-          <Link to="/workers/dashboard" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">For Workers</Link>
-          <Link to="/contact" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Contact Us</Link>
+      <div className={`fixed top-0 right-0 h-full w-72 z-40 ${isMenuOpen ? "translate-x-0" : "translate-x-full"} md:hidden`}>
+        <nav className="flex flex-col gap-6 p-8 pt-24 bg-black">
+          <Link to="/" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Početna</Link>
+          <Link to="/about" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">O Nama</Link>
+          <Link to="/dashboard" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Pregled</Link>
+          <Link to="/contact" onClick={toggleMenu} className="text-white hover:text-blue-400 font-medium text-lg transition-colors py-2 px-4 rounded-lg hover:bg-gray-800/50">Kontakt</Link>
 
           <div className="pt-4 border-t border-gray-700">
             {isLoggedIn ? (
@@ -143,8 +146,8 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex flex-col gap-3">
-                <Button type="secondary" btnText="Log In" to="/login" />
-                <Button type="primary" btnText="Sign Up" to="/register" />
+                <Button type="secondary" btnText="Prijava" to="/login" />
+                <Button type="primary" btnText="Registracija" to="/register" />
               </div>
             )}
           </div>

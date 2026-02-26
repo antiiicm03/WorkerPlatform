@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext';
 const API_BASE = "http://localhost:5114";
 
 export default function ProfileSettings() {
-  const { user, updateUser } = useAuth(); // ← dodato updateUser
+  const { user, updateUser } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
@@ -32,7 +32,6 @@ export default function ProfileSettings() {
 
   const token = user?.accessToken || localStorage.getItem('accessToken');
 
-  // Učitaj podatke iz baze
   useEffect(() => {
     if (!user?.id) return;
     const fetchUser = async () => {
@@ -83,7 +82,6 @@ export default function ProfileSettings() {
       const json = await res.json();
       if (!json.success) throw new Error(json.message || 'Greška pri ažuriranju');
 
-      // ← Ažuriramo AuthContext da se Navbar odmah promeni
       updateUser({
         name: `${profileForm.firstName} ${profileForm.lastName}`,
         email: profileForm.email,

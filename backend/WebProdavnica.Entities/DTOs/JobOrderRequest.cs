@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebProdavnica.Entities.DTOs
 {
@@ -22,7 +16,7 @@ namespace WebProdavnica.Entities.DTOs
 
         public bool Urgent { get; set; }
 
-        [Range(0.01, 10000000, ErrorMessage = "Cena mora biti pozitivan broj")]
+        [Range(0.00, 10000000, ErrorMessage = "Cena mora biti pozitivan broj")]
         public decimal TotalPrice { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "UserId mora biti validan")]

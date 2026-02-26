@@ -75,8 +75,8 @@ const Login = () => {
         <div className="max-w-md w-full">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>
-              <p className="text-gray-300">Log in to access your account</p>
+              <h1 className="text-4xl font-bold text-white mb-2">Dobrodošli Nazad</h1>
+              <p className="text-gray-300">Prijavite se na Vaš nalog.</p>
             </div>
 
             {/* Error poruke */}
@@ -100,13 +100,15 @@ const Login = () => {
                   Prijavljujem se kao:
                 </label>
                 <div className="grid grid-cols-2 gap-3">
-                  <button type="button" onClick={() => setFormData({ ...formData, userType: 'user' })}
+                  <button type="button"
+                    onClick={() => setFormData({ ...formData, userType: 'user' })}
                     className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'user' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
-                    User
+                    Korisnik
                   </button>
-                  <button type="button" onClick={() => setFormData({ ...formData, userType: 'craftsman' })}
+                  <button type="button"
+                    onClick={() => setFormData({ ...formData, userType: 'craftsman' })}
                     className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'craftsman' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
-                    Worker
+                    Majstor
                   </button>
                 </div>
               </div>
@@ -119,7 +121,7 @@ const Login = () => {
                   </div>
                   <input type="email" name="email" value={formData.email} onChange={handleChange}
                     className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="your.email@example.com" />
+                    placeholder="vas.email@primer.com" />
                 </div>
               </div>
 
@@ -131,7 +133,7 @@ const Login = () => {
                   </div>
                   <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange}
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Enter your password" />
+                    placeholder="Unesite Šifru"/>
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition">
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -143,31 +145,31 @@ const Login = () => {
                 <label className="flex items-center">
                   <input type="checkbox"
                     className="w-4 h-4 bg-gray-700 border-gray-600 rounded text-blue-600 focus:ring-2 focus:ring-blue-500" />
-                  <span className="ml-2 text-sm text-gray-300">Remember me</span>
+                  <span className="ml-2 text-sm text-gray-300">Zapamti me</span>
                 </label>
                 <Link to="/forgot-password" className="text-sm text-blue-400 hover:text-blue-300 transition">
-                  Forgot password?
+                  Zaboravljena Šifra?
                 </Link>
               </div>
 
               <button type="submit" disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
-                {loading ? 'Prijavljivanje...' : 'Log In'}
+                {loading ? 'Prijavljivanje...' : 'Prijavi se'}
               </button>
             </form>
 
             <div className="mt-8 text-center">
               <p className="text-gray-300">
-                Don't have an account?{' '}
+                Nemate nalog?{' '}
                 <Link to="/register" className="text-blue-400 hover:text-blue-300 font-semibold transition">
-                  Sign up
+                  Registrujte se
                 </Link>
               </p>
             </div>
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">🔒 Your data is secure and encrypted</p>
+            <p className="text-sm text-gray-400">🔒 Vaši podaci su bezbedni i šifrovani</p>
           </div>
         </div>
       </div>

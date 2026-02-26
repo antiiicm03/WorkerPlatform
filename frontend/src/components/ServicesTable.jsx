@@ -19,8 +19,8 @@ const SELECT_OPTION_BG = {
 export default function ServicesTable({ 
   services, 
   onAddService,
-  onStatusChange, // Optional - if provided, shows status dropdown
-  onDelete, // Optional - if provided, shows delete button
+  onStatusChange, 
+  onDelete,
   buttonText = "Dodaj Novi Posao",
   buttonIcon = <Plus className="w-5 h-5" />
 }) {
@@ -31,7 +31,7 @@ export default function ServicesTable({
     });
   };
 
-  // Check if we're in edit mode (worker dashboard) or view-only mode (user dashboard)
+  // Check worker dashboard / user deshboard
   const isEditMode = !!(onStatusChange || onDelete);
 
   return (
@@ -92,7 +92,7 @@ export default function ServicesTable({
                     <span className="text-white">{service.jobDescription || 'Bez opisa'}</span>
                   </td>
 
-                  {/* Status - Dropdown (workers) or Badge (users) */}
+                  {/* Status */}
                   <td className="py-4 px-4">
                     {onStatusChange ? (
                       // Editable status dropdown for workers

@@ -8,8 +8,8 @@ import { useAuth } from '../context/AuthContext';
 const API_BASE = "http://localhost:5114";
 
 const professions = [
-  'Plumber', 'Electrician', 'Handyman', 'Furniture Assembly',
-  'Air Conditioning', 'Painter', 'TV Mounting', 'Auto Mechanic', 'General Help'
+  'Vodoinstalater', 'Električar', 'Zanatlija', 'Sklapanje nameštaja',
+  'Klima uređaj', 'Moler', 'Postavljanje TV-a', 'Auto mehaničar', 'Opšta pomoć'
 ];
 
 const Register = () => {
@@ -135,8 +135,8 @@ const Register = () => {
         <div className="max-w-md w-full">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-white mb-2">Create Account</h1>
-              <p className="text-gray-300">Join Majstorija and get started today</p>
+              <h1 className="text-4xl font-bold text-white mb-2">Registracija</h1>
+              <p className="text-gray-300">Pridružite se Majstoriji i počnite danas.</p>
             </div>
 
             {/* Error poruke */}
@@ -158,15 +158,15 @@ const Register = () => {
 
               {/* User Type Toggle */}
               <div>
-                <label className="block text-gray-300 mb-3 font-medium">I want to register as:</label>
+                <label className="block text-gray-300 mb-3 font-medium">Prijavljujem se kao:</label>
                 <div className="grid grid-cols-2 gap-3">
                   <button type="button" onClick={() => setFormData({ ...formData, userType: 'user' })}
                     className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'user' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
-                    User
+                    Korisnik
                   </button>
                   <button type="button" onClick={() => setFormData({ ...formData, userType: 'worker' })}
                     className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'worker' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
-                    Worker
+                    Majstor
                   </button>
                 </div>
               </div>
@@ -174,45 +174,45 @@ const Register = () => {
               {/* First Name + Last Name */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-gray-300 mb-2 font-medium">First Name</label>
+                  <label className="block text-gray-300 mb-2 font-medium">Ime</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <User className="w-5 h-5 text-gray-400" />
                     </div>
                     <input type="text" name="firstName" value={formData.firstName} onChange={handleChange}
                       className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                      placeholder="First Name" />
+                      placeholder="Ime" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-gray-300 mb-2 font-medium">Last Name</label>
+                  <label className="block text-gray-300 mb-2 font-medium">Prezime</label>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                       <User className="w-5 h-5 text-gray-400" />
                     </div>
                     <input type="text" name="lastName" value={formData.lastName} onChange={handleChange}
                       className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                      placeholder="Last Name" />
+                      placeholder="Prezime" />
                   </div>
                 </div>
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">Email Address</label>
+                <label className="block text-gray-300 mb-2 font-medium">Email</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail className="w-5 h-5 text-gray-400" />
                   </div>
                   <input type="email" name="email" value={formData.email} onChange={handleChange}
                     className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="your.email@example.com" />
+                    placeholder="vas.email@primer.com" />
                 </div>
               </div>
 
               {/* Phone */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">Phone Number</label>
+                <label className="block text-gray-300 mb-2 font-medium">Telefon</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Phone className="w-5 h-5 text-gray-400" />
@@ -231,33 +231,31 @@ const Register = () => {
                       <div className="w-full border-t border-gray-600"></div>
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Professional Info</span>
+                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Profesionalne Informacije</span>
                     </div>
                   </div>
 
-                  {/* Location */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Location</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Lokacija</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <MapPin className="w-5 h-5 text-gray-400" />
                       </div>
                       <input type="text" name="location" value={formData.location} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. Beograd, Novi Sad..." />
+                        placeholder="npr. Beograd, Novi Sad..." />
                     </div>
                   </div>
 
-                  {/* Profession */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Profession</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Profesija</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
                       </div>
                       <select name="profession" value={formData.profession} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none cursor-pointer">
-                        <option value="" disabled className="bg-gray-800 text-gray-400">Select your profession</option>
+                        <option value="" disabled className="bg-gray-800 text-gray-400">Izaberite profesiju</option>
                         {professions.map((p) => (
                           <option key={p} value={p.toLowerCase()} className="bg-gray-800 text-white">{p}</option>
                         ))}
@@ -270,42 +268,39 @@ const Register = () => {
                     </div>
                   </div>
 
-                  {/* Experience */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Years of Experience</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Godine Iskustva</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
                       </div>
                       <input type="number" name="experience" value={formData.experience} onChange={handleChange} min="0" max="60"
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. 5" />
+                        placeholder="npr. 5" />
                     </div>
                   </div>
 
-                  {/* Hourly Rate */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Hourly Rate (RSD)</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Satnica (RSD)</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <span className="text-gray-400 text-sm font-semibold">RSD</span>
                       </div>
                       <input type="number" name="hourlyRate" value={formData.hourlyRate} onChange={handleChange} min="0" step="0.01"
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. 1500" />
+                        placeholder="npr. 1500" />
                     </div>
                   </div>
 
-                  {/* Working Hours */}
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Working Hours</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Radno vreme</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Clock className="w-5 h-5 text-gray-400" />
                       </div>
                       <input type="text" name="workingHours" value={formData.workingHours} onChange={handleChange}
                         className="w-full pl-12 pr-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                        placeholder="e.g. Mon-Fri 08:00-17:00" />
+                        placeholder="npr. Pon-Pet 08:00-17:00" />
                     </div>
                   </div>
 
@@ -314,7 +309,7 @@ const Register = () => {
                       <div className="w-full border-t border-gray-600"></div>
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Account Security</span>
+                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Bezbednost Naloga</span>
                     </div>
                   </div>
                 </>
@@ -322,32 +317,32 @@ const Register = () => {
 
               {/* Password */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">Password</label>
+                <label className="block text-gray-300 mb-2 font-medium">Lozinka</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="w-5 h-5 text-gray-400" />
                   </div>
                   <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange}
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Create a strong password" />
+                    placeholder="Kreirajte jaku lozinku" />
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition">
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                   </button>
                 </div>
-                <p className="text-xs text-gray-400 mt-1">Minimum 8 characters</p>
+                <p className="text-xs text-gray-400 mt-1">Minimum 8 karaktera</p>
               </div>
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">Confirm Password</label>
+                <label className="block text-gray-300 mb-2 font-medium">Potvrdite lozinku</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="w-5 h-5 text-gray-400" />
                   </div>
                   <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange}
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Confirm your password" />
+                    placeholder="Potvrdite lozinku" />
                   <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition">
                     {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -360,30 +355,30 @@ const Register = () => {
                 <input type="checkbox" name="agreeToTerms" checked={formData.agreeToTerms} onChange={handleChange}
                   className="w-4 h-4 mt-1 bg-gray-700 border-gray-600 rounded text-blue-600 focus:ring-2 focus:ring-blue-500" />
                 <label className="ml-3 text-sm text-gray-300">
-                  I agree to the{' '}
-                  <Link to="/terms" className="text-blue-400 hover:text-blue-300">Terms and Conditions</Link>
-                  {' '}and{' '}
-                  <Link to="/privacy" className="text-blue-400 hover:text-blue-300">Privacy Policy</Link>
+                  Prihvatam{' '}
+                  <Link to="/terms" className="text-blue-400 hover:text-blue-300">Uslove korišćenja</Link>
+                  {' '}i{' '}
+                  <Link to="/privacy" className="text-blue-400 hover:text-blue-300">Politiku privatnosti</Link>
                 </label>
               </div>
 
               {/* Submit */}
               <button type="submit" disabled={loading}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
-                {loading ? 'Creating account...' : 'Create Account'}
+                {loading ? 'Kreiranje naloga...' : 'Kreiraj Nalog'}
               </button>
             </form>
 
             <div className="mt-8 text-center">
               <p className="text-gray-300">
-                Already have an account?{' '}
-                <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition">Log in</Link>
+                Već imate nalog?{' '}
+                <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition">Prijavite se</Link>
               </p>
             </div>
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-400">🔒 Your data is secure and encrypted</p>
+            <p className="text-sm text-gray-400">🔒 Vaši podaci su bezbedni i šifrovani</p>
           </div>
         </div>
       </div>

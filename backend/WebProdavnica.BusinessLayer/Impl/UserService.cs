@@ -22,5 +22,8 @@ namespace WebProdavnica.BusinessLayer.Impl
         public User? Get(int id) => _userRepository.Get(id);
 
         public List<User> GetAll() => _userRepository.GetAll();
+
+        public bool UpdatePassword(int userId, string newPasswordHash)
+    => _userRepository.UpdatePassword(userId, newPasswordHash);
     }
 }

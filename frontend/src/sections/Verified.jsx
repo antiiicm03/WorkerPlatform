@@ -10,10 +10,10 @@ export default function Verified() {
                 <Lottie animationData={VerifiedIcon} className="max-w-[200px]"></Lottie>
             </div>
             <div className="p-5 text-justified md:flex md:flex-col md:justify-center md:items-center text-center">
-                <Text type="subHeadingBlack" value="Get verified and improve your account's trust level."></Text>
+                <Text type="subHeadingBlack" value="Registrujte se danas i proširite vaša iskustva."></Text>
             </div>
             <div className="my-4">
-                <Button type="primary" btnText="Verify Account"></Button>
+                <Button type="primary" btnText="Saznaj Više"></Button>
             </div>
         </div>
     )

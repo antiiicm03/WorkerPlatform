@@ -9,10 +9,10 @@ export default function Summary() {
         <div className="mx-auto max-w-7xl wrap pb-10 md:px-20">
             <div className="p-5 md:flex flex-row-reverse">
                 <div className="p-5 text-justified md:flex-1 md:flex md:flex-col md:justify-center md:items-center">
-                    <Text type="subHeading" value="Start using Leno today to achieve your long term Goals"></Text>
-                    <Text type="primary" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, corporis aperiam voluptatibus libero accusamus illo asperiores dolor rerum quibusdam optio!"></Text>
+                    <Text type="subHeading" value="Pronađi majstore lako i brzo uz Majstorija web aplikacju"></Text>
+                    <Text type="primary" value="Pronađi lokalne majstore za sve vrste poslova i poveži se sa pouzdanim stručnjacima brzo i jednostavno."></Text>
                     <div className="w-full mt-8">
-                        <Button type="primary" btnText="Learn More" to="/about"></Button>
+                        <Button type="primary" btnText="Saznaj više" to="/about"></Button>
                     </div>
                 </div>
                 <div className="flex justify-center items-center md:flex-1">
@@ -21,10 +21,10 @@ export default function Summary() {
             </div>
             <div className="p-5 md:flex">
                 <div className="p-5 text-justified md:flex-1 md:flex md:flex-col md:justify-center md:items-center">
-                    <Text type="subHeading" value="The Calendar feature helps you organize tasks"></Text>
-                    <Text type="primary" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, corporis aperiam voluptatibus libero accusamus illo asperiores dolor rerum quibusdam optio! Lorem ipsum dolor sit amet consectetur adipisicing."></Text>
+                    <Text type="subHeading" value="Organizuj svoje projekte bez stresa"></Text>
+                    <Text type="primary" value="Planiraj termine, beleži radne zadatke i prati napredak svojih projekata, kako bi sve išlo glatko i bez stresa."></Text>
                     <div className="w-full mt-8">
-                        <Button type="primary" btnText="Learn More" to="/about"></Button>
+                        <Button type="primary" btnText="Saznaj više" to="/about"></Button>
                     </div>
                 </div>
                 <div className="flex justify-center items-center md:flex-1">

@@ -16,5 +16,7 @@ namespace WebProdavnica.DAL.Abstract
         User Get(int id);
         List<User> GetAll();
         User? GetByEmail(string email);
+
+        bool UpdatePassword(int userId, string newPasswordHash);
     }
 }

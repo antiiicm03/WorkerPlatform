@@ -9,5 +9,7 @@ namespace WebProdavnica.BusinessLayer.Abstract
         bool Delete(int id);
         User? Get(int id);
         List<User> GetAll();
+
+        bool UpdatePassword(int userId, string newPasswordHash);
     }
 }

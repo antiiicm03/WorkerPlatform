@@ -14,14 +14,12 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Sačuvaj u sessionStorage kada stignemo prvi put sa location.state
   useEffect(() => {
     if (location.state) {
       sessionStorage.setItem('checkoutData', JSON.stringify(location.state));
     }
   }, [location.state]);
 
-  // Čitaj iz location.state ili sessionStorage kao backup (kada se vratiš nazad)
   const bookingData = location.state || JSON.parse(sessionStorage.getItem('checkoutData') || 'null');
 
   useEffect(() => {
