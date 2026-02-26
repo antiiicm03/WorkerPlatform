@@ -12,7 +12,7 @@ export default function GridCard({ image, heading }) {
                     href="#" 
                     className="inline-flex items-center gap-2 text-[#2324fe] font-semibold hover:gap-3 transition-all duration-200 group"
                 >
-                    <span>Pronađi Mostera</span>
+                    <span>Pronađi Majstora</span>
                     <svg 
                         className="w-5 h-5 group-hover:translate-x-1 transition-transform" 
                         fill="none" 

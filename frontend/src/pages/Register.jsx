@@ -8,8 +8,8 @@ import { useAuth } from '../context/AuthContext';
 const API_BASE = "http://localhost:5114";
 
 const professions = [
-  'Plumber', 'Electrician', 'Handyman', 'Furniture Assembly',
-  'Air Conditioning', 'Painter', 'TV Mounting', 'Auto Mechanic', 'General Help'
+  'Vodoinstalater', 'Električar', 'Zanatlija', 'Sklapanje nameštaja',
+  'Klima uređaj', 'Moler', 'Postavljanje TV-a', 'Auto mehaničar', 'Opšta pomoć'
 ];
 
 const Register = () => {
@@ -135,8 +135,8 @@ const Register = () => {
         <div className="max-w-md w-full">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-white mb-2">Kreirajte Nalog</h1>
-              <p className="text-gray-300">Pridružite se Majstoriji danas</p>
+              <h1 className="text-4xl font-bold text-white mb-2">Registracija</h1>
+              <p className="text-gray-300">Pridružite se Majstoriji i počnite danas.</p>
             </div>
 
             {/* Error poruke */}
@@ -158,7 +158,7 @@ const Register = () => {
 
               {/* User Type Toggle */}
               <div>
-                <label className="block text-gray-300 mb-3 font-medium">Registrujem se kao:</label>
+                <label className="block text-gray-300 mb-3 font-medium">Prijavljujem se kao:</label>
                 <div className="grid grid-cols-2 gap-3">
                   <button type="button" onClick={() => setFormData({ ...formData, userType: 'user' })}
                     className={`py-3 px-4 rounded-lg font-medium transition ${formData.userType === 'user' ? 'bg-blue-600 text-white border-2 border-blue-500' : 'bg-gray-700/50 text-gray-300 border-2 border-gray-600 hover:border-gray-500'}`}>
@@ -199,7 +199,7 @@ const Register = () => {
 
               {/* Email */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">Email adresa</label>
+                <label className="block text-gray-300 mb-2 font-medium">Email</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Mail className="w-5 h-5 text-gray-400" />
@@ -212,7 +212,7 @@ const Register = () => {
 
               {/* Phone */}
               <div>
-                <label className="block text-gray-300 mb-2 font-medium">Broj telefona</label>
+                <label className="block text-gray-300 mb-2 font-medium">Telefon</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Phone className="w-5 h-5 text-gray-400" />
@@ -231,7 +231,7 @@ const Register = () => {
                       <div className="w-full border-t border-gray-600"></div>
                     </div>
                     <div className="relative flex justify-center text-xs">
-                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Profesionalni Podaci</span>
+                      <span className="px-3 bg-gray-800/80 text-blue-400 font-semibold tracking-widest uppercase">Profesionalne Informacije</span>
                     </div>
                   </div>
 
@@ -269,7 +269,7 @@ const Register = () => {
                   </div>
 
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Godine iskustva</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Godine Iskustva</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <Briefcase className="w-5 h-5 text-gray-400" />
@@ -281,7 +281,7 @@ const Register = () => {
                   </div>
 
                   <div>
-                    <label className="block text-gray-300 mb-2 font-medium">Cena po satu (RSD)</label>
+                    <label className="block text-gray-300 mb-2 font-medium">Satnica (RSD)</label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                         <span className="text-gray-400 text-sm font-semibold">RSD</span>

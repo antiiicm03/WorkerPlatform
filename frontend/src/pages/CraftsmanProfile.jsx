@@ -96,7 +96,7 @@ const CraftsmanProfile = () => {
 
   const handleSubmitRating = async () => {
     if (selectedRating === 0) {
-      setRatingError('Molimo odaberite ocenu');
+      setRatingError('odaberite ocenu');
       return;
     }
 
@@ -135,7 +135,7 @@ const CraftsmanProfile = () => {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-blue-500 animate-spin mx-auto mb-4" />
-            <p className="text-gray-400">Loading profile...</p>
+            <p className="text-gray-400">Učitavamo profil...</p>
           </div>
         </div>
         <Footer />
@@ -152,13 +152,13 @@ const CraftsmanProfile = () => {
             <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertCircle className="w-8 h-8 text-red-400" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Profile Not Found</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">Profil nije pronađen.</h2>
             <p className="text-gray-400 mb-6">{error || 'Could not load craftsman profile'}</p>
             <button
               onClick={() => navigate(-1)}
               className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition"
             >
-              Go Back
+              Nazad
             </button>
           </div>
         </div>
@@ -238,7 +238,7 @@ const CraftsmanProfile = () => {
             className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Back
+            Nazad
           </button>
 
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 p-8 mb-6">
@@ -278,36 +278,36 @@ const CraftsmanProfile = () => {
                       <span className="text-white font-bold text-2xl">{craftsman.averageRating.toFixed(1)}</span>
                       <span className="text-gray-400">/ 5.0</span>
                       <span className="text-gray-500">
-                        ({craftsman.ratingCount || 0} {craftsman.ratingCount === 1 ? 'rating' : 'ratings'})
+                        ({craftsman.ratingCount || 0} {craftsman.ratingCount === 1 ? 'ocena' : 'ocena'})
                       </span>
                     </>
                   ) : (
-                    <span className="text-gray-500">No ratings yet</span>
+                    <span className="text-gray-500">Još nema ocena.</span>
                   )}
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="bg-gray-900/50 rounded-xl p-3 border border-gray-700">
                     <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
-                      <Briefcase className="w-3.5 h-3.5" /> Experience
+                      <Briefcase className="w-3.5 h-3.5" /> Iskustvo
                     </div>
-                    <p className="text-white font-bold">{craftsman.experience} years</p>
+                    <p className="text-white font-bold">{craftsman.experience} godina</p>
                   </div>
                   <div className="bg-gray-900/50 rounded-xl p-3 border border-gray-700">
                     <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
-                      <DollarSign className="w-3.5 h-3.5" /> Rate
+                      <DollarSign className="w-3.5 h-3.5" /> Satnica
                     </div>
-                    <p className="text-white font-bold">{craftsman.hourlyRate} RSD/hr</p>
+                    <p className="text-white font-bold">{craftsman.hourlyRate} RSD/h</p>
                   </div>
                   <div className="bg-gray-900/50 rounded-xl p-3 border border-gray-700">
                     <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
-                      <MapPin className="w-3.5 h-3.5" /> Location
+                      <MapPin className="w-3.5 h-3.5" /> Lokacija
                     </div>
                     <p className="text-white font-bold truncate">{craftsman.location || 'N/A'}</p>
                   </div>
                   <div className="bg-gray-900/50 rounded-xl p-3 border border-gray-700">
                     <div className="flex items-center gap-2 text-gray-400 text-xs mb-1">
-                      <Clock className="w-3.5 h-3.5" /> Hours
+                      <Clock className="w-3.5 h-3.5" /> Sati
                     </div>
                     <p className="text-white font-bold truncate">{craftsman.workingHours || 'N/A'}</p>
                   </div>
@@ -337,14 +337,14 @@ const CraftsmanProfile = () => {
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 p-6 mb-6">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
               <CalendarClock className="w-6 h-6 text-blue-400" />
-              Active & Upcoming Jobs
+              Aktivni Poslovi
               <span className="text-sm font-normal text-gray-400 ml-2">({activeJobs.length})</span>
             </h2>
             
             {activeJobs.length === 0 ? (
               <div className="text-center py-12">
                 <Calendar className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-                <p className="text-gray-400">No active jobs at the moment</p>
+                <p className="text-gray-400">Trenutno nema aktivnih poslova.</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -363,12 +363,12 @@ const CraftsmanProfile = () => {
                           {job.urgent && (
                             <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-600 text-white text-sm font-medium">
                               <AlertTriangle className="w-4 h-4" />
-                              Urgent
+                              Hitno
                             </span>
                           )}
                         </div>
                         
-                        <p className="text-white font-medium mb-2">{job.jobDescription || 'No description'}</p>
+                        <p className="text-white font-medium mb-2">{job.jobDescription || 'Opis nedostupan'}</p>
                         
                         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
                           <div className="flex items-center gap-1.5">
@@ -398,14 +398,14 @@ const CraftsmanProfile = () => {
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-700 p-6">
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-green-400" />
-              Completed Jobs
+              Završeni Poslovi
               <span className="text-sm font-normal text-gray-400 ml-2">({completedJobs.length})</span>
             </h2>
             
             {completedJobs.length === 0 ? (
               <div className="text-center py-12">
                 <CheckCircle className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-                <p className="text-gray-400">No completed jobs yet</p>
+                <p className="text-gray-400">Trenutno nema završenih poslova.</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -421,7 +421,7 @@ const CraftsmanProfile = () => {
                           {job.status}
                         </span>
                         
-                        <p className="text-white font-medium mb-2">{job.jobDescription || 'No description'}</p>
+                        <p className="text-white font-medium mb-2">{job.jobDescription || 'Opis nedostupan.'}</p>
                         
                         <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
                           <div className="flex items-center gap-1.5">
@@ -445,7 +445,7 @@ const CraftsmanProfile = () => {
                 
                 {completedJobs.length > 5 && (
                   <p className="text-center text-gray-400 text-sm pt-2">
-                    And {completedJobs.length - 5} more completed jobs
+                    Još {completedJobs.length - 5} završenih poslova
                   </p>
                 )}
               </div>

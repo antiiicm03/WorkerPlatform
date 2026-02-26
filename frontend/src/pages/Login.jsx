@@ -75,8 +75,8 @@ const Login = () => {
         <div className="max-w-md w-full">
           <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
             <div className="text-center mb-8">
-              <h1 className="text-4xl font-bold text-white mb-2">Dobrodošli</h1>
-              <p className="text-gray-300">Prijavite se na vaš nalog</p>
+              <h1 className="text-4xl font-bold text-white mb-2">Dobrodošli Nazad</h1>
+              <p className="text-gray-300">Prijavite se na Vaš nalog.</p>
             </div>
 
             {/* Error poruke */}
@@ -133,7 +133,7 @@ const Login = () => {
                   </div>
                   <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange}
                     className="w-full pl-12 pr-12 py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                    placeholder="Unesite lozinku" />
+                    placeholder="Unesite Šifru"/>
                   <button type="button" onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-300 transition">
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
@@ -148,7 +148,7 @@ const Login = () => {
                   <span className="ml-2 text-sm text-gray-300">Zapamti me</span>
                 </label>
                 <Link to="/forgot-password" className="text-sm text-blue-400 hover:text-blue-300 transition">
-                  Zaboravili ste lozinku?
+                  Zaboravljena Šifra?
                 </Link>
               </div>
 

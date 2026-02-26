@@ -8,7 +8,7 @@ export default function AddJobModal({ isOpen, onClose, onSubmit, craftsmanId }) 
     status: 'Zakazano',
     urgent: false,
     totalPrice: '',
-    userId: 1, // TODO: Get from logged in user context
+    userId: 1,
     craftsmanId: craftsmanId
   });
 
@@ -29,7 +29,6 @@ export default function AddJobModal({ isOpen, onClose, onSubmit, craftsmanId }) 
     setIsSubmitting(true);
 
     try {
-      // Convert form data to match backend model
       const jobOrder = {
         JobId: 0,
         ScheduledDate: new Date(formData.scheduledDate).toISOString(),
@@ -42,7 +41,7 @@ export default function AddJobModal({ isOpen, onClose, onSubmit, craftsmanId }) 
     };
 
       
-      console.log('Submitting job order:', jobOrder);
+      console.log('Prijavluje se posao:', jobOrder);
 
       await onSubmit(jobOrder);
       
@@ -160,7 +159,7 @@ export default function AddJobModal({ isOpen, onClose, onSubmit, craftsmanId }) 
             />
           </div>
 
-          {/* Urgent Checkbox */}
+          {/* Hitno Checkbox */}
           <div className="flex items-center gap-3">
             <input
               type="checkbox"

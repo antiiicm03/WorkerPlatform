@@ -24,7 +24,6 @@ export default function PaymentSuccess() {
 
     const confirmPayment = async () => {
       try {
-        // Dohvatamo iznos iz session storage (sačuvan pre redirecta)
         const amount = parseFloat(sessionStorage.getItem('checkoutAmount') || '0');
 
         await fetch(`${API_BASE}/api/payments/confirm`, {

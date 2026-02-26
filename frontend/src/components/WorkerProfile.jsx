@@ -5,7 +5,6 @@ export default function WorkerProfile({ data, onUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(data);
 
-  // Update formData when data prop changes
   useEffect(() => {
     setFormData(data);
   }, [data]);
@@ -58,9 +57,9 @@ export default function WorkerProfile({ data, onUpdate }) {
         )}
       </div>
 
-      {/* Profile Grid */}
+      {/* Profil */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* First Name */}
+        {/* Ime */}
         <div>
           <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
             <User className="w-4 h-4" />
@@ -80,7 +79,7 @@ export default function WorkerProfile({ data, onUpdate }) {
           )}
         </div>
 
-        {/* Last Name */}
+        {/* Prezime */}
         <div>
           <label className="flex items-center gap-2 text-gray-400 text-sm mb-2">
             <User className="w-4 h-4" />

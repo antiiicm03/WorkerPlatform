@@ -17,74 +17,74 @@ const BrowseTasks = () => {
   const categories = [
     {
       id: 1,
-      name: 'Plumbers',
+      name: 'Vodoinstalater',
       slug: 'plumbers',
       icon: Droplets,
-      description: 'Pipe repairs, installations, and leak fixes',
+      description: 'Popravka cevki, instalacije, popravka curenja',
       color: 'from-blue-500 to-cyan-500'
     },
     {
       id: 2,
-      name: 'Electricians',
+      name: 'Električar',
       slug: 'electricians',
       icon: Zap,
-      description: 'Electrical repairs, wiring, and installations',
+      description: 'Električne popravke, ožičenje, instalacije',
       color: 'from-yellow-500 to-orange-500'
     },
     {
       id: 3,
-      name: 'Handymen',
+      name: 'Haus Majstor',
       slug: 'handymen',
       icon: Hammer,
-      description: 'General repairs and home maintenance',
+      description: 'Generalne popravke i održavanje kuće',
       color: 'from-purple-500 to-pink-500'
     },
     {
       id: 4,
-      name: 'Furniture Assembly',
+      name: 'Sklapač Nameštaja',
       slug: 'furniture-assembly',
       icon: Armchair,
-      description: 'Assemble and install furniture',
+      description: 'Sklapanje i instalacija nameštaja',
       color: 'from-green-500 to-emerald-500'
     },
     {
       id: 5,
-      name: 'Air Conditioning',
+      name: 'Ventilacija',
       slug: 'air-conditioning',
       icon: Wind,
-      description: 'AC repair, installation, and maintenance',
+      description: 'Popravka klime, održavanje i instalacija',
       color: 'from-cyan-500 to-blue-500'
     },
     {
       id: 6,
-      name: 'Painters',
+      name: 'Moleri',
       slug: 'painters',
       icon: PaintBucket,
-      description: 'Interior and exterior painting services',
+      description: 'Krečenje interijera i eksterijera',
       color: 'from-red-500 to-pink-500'
     },
     {
       id: 7,
-      name: 'TV Mounting',
+      name: 'Ugradnja Televizora',
       slug: 'tv-mounting',
       icon: Tv,
-      description: 'Professional TV installation and mounting',
+      description: 'Profesionalna instalacija televizora i ugradnja',
       color: 'from-indigo-500 to-purple-500'
     },
     {
       id: 8,
-      name: 'Auto Mechanics',
+      name: 'Auto Mehaničari',
       slug: 'auto-mechanics',
       icon: Car,
-      description: 'Vehicle repairs and maintenance',
+      description: 'Popravka vozila i održavanje',
       color: 'from-gray-600 to-gray-800'
     },
     {
       id: 9,
-      name: 'General Help',
+      name: 'Generalne Potrebe',
       slug: 'general-help',
       icon: Wrench,
-      description: 'Various home and office tasks',
+      description: 'Razne pomoći oko kuće i okruženja',
       color: 'from-blue-600 to-indigo-600'
     }
   ];
@@ -97,10 +97,10 @@ const BrowseTasks = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-              Book Trusted Help for Home Tasks
+              Angažujte Pouzdanu Pomoć za Kućne Poslove
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-              Post any task. Pick the best person. Get it done.
+              Objavite zadatak. Izaberite najboljeg. Završite posao.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
@@ -108,13 +108,13 @@ const BrowseTasks = () => {
                 to="/register"
                 className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold px-8 py-3 rounded-lg transition-all transform hover:scale-105 shadow-lg"
               >
-                Hire Tasker
+                Angažujte Radnika
               </Link>
               <Link
                 to="/register"
                 className="bg-gray-700 hover:bg-gray-600 text-white font-semibold px-8 py-3 rounded-lg transition-all transform hover:scale-105"
               >
-                Become a Tasker
+                Postanite Radnik
               </Link>
             </div>
           </div>
@@ -144,7 +144,7 @@ const BrowseTasks = () => {
                     to={`/craftsmen/${category.slug}`}
                     className="inline-block bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white font-semibold px-6 py-2 rounded-lg transition-all border border-blue-500/30 hover:border-blue-500"
                   >
-                    Hire Tasker
+                    Angažujte Radnika
                   </Link>
                 </div>
               );
@@ -156,15 +156,15 @@ const BrowseTasks = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
               <div>
                 <div className="text-5xl font-bold text-white mb-2">1M+</div>
-                <div className="text-gray-300 text-lg">Customers</div>
+                <div className="text-gray-300 text-lg">Korisnici</div>
               </div>
               <div>
                 <div className="text-5xl font-bold text-white mb-2">2.5M+</div>
-                <div className="text-gray-300 text-lg">Tasks Done</div>
+                <div className="text-gray-300 text-lg">Završenih Poslova</div>
               </div>
               <div>
                 <div className="text-5xl font-bold text-white mb-2">140+</div>
-                <div className="text-gray-300 text-lg">User Reviews</div>
+                <div className="text-gray-300 text-lg">Recenzije Korisnika</div>
               </div>
             </div>
           </div>
@@ -172,34 +172,34 @@ const BrowseTasks = () => {
           {/* How It Works */}
           <div className="mt-24">
             <h2 className="text-4xl font-bold text-white text-center mb-12">
-              How It Works
+              Kako Funkcioniše
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-white">
                   1
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Choose Your Task</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Izaberite Vaš Zadatak</h3>
                 <p className="text-gray-300">
-                  Select from our wide range of services and describe what you need.
+                  Odaberite iz naše široke ponude usluga i opišite šta vam je potrebno.
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-white">
                   2
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Get Matched</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Bićete Povezani</h3>
                 <p className="text-gray-300">
-                  Receive offers from qualified taskers in your area.
+                  Primajte ponude od kvalifikovanih radnika u vašem kraju.
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-white">
                   3
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Get It Done</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Završite Posao</h3>
                 <p className="text-gray-300">
-                  Your tasker completes the job and you pay securely.
+                  Vaš radnik obavlja posao, a vi plaćate sigurno.
                 </p>
               </div>
             </div>
