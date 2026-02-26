@@ -10,23 +10,22 @@ import workerSeven from "../assets/workerSeven.jpg";
 import workerEight from "../assets/workerEight.jpg";
 import workerNine from "../assets/workerNine.jpg";
 
-
-export default function WorkWithUsSection() {
+export default function Services() {
     return (
         <main className="bg-[#2324fe] pt-12">
             <div className="text-center">
-                <Text type="heading" value="Dostupni Servisi"></Text>
+                <Text type="heading" value="Dostupni Servisi" />
             </div>
             <div className="p-10 mt-10 gap-10 grid md:grid-cols-3">
-                <Card image={plumber} heading="Vodoinstalater" />
-                <Card image={workerTwo} heading="Elektricar" />
-                <Card image={workerThree} heading="Cistac" />
-                <Card image={workerFour} heading="Moler" />
-                <Card image={workerFive} heading="Keramicar" />
-                <Card image={workerSix} heading="Stolar" />
-                <Card image={workerSeven} heading="Bravar" />
-                <Card image={workerEight} heading="Limар" />
-                <Card image={workerNine} heading="Automehanicar" />
+                <Card image={plumber}     heading="Vodoinstalater"   slug="plumbers" />
+                <Card image={workerTwo}   heading="Električar"        slug="electricians" />
+                <Card image={workerThree} heading="Majstor za sve"    slug="handymen" />
+                <Card image={workerFour}  heading="Moler"             slug="painters" />
+                <Card image={workerFive}  heading="Montaža nameštaja" slug="furniture-assembly" />
+                <Card image={workerSix}   heading="Klima uređaji"     slug="air-conditioning" />
+                <Card image={workerSeven} heading="Montaža TV-a"      slug="tv-mounting" />
+                <Card image={workerEight} heading="Automehaničar"     slug="auto-mechanics" />
+                <Card image={workerNine}  heading="Opšta pomoć"       slug="general-help" />
             </div>
         </main>
     );

@@ -11,7 +11,7 @@ export default function Main() {
                 <Text type="secondary" value="Building trust between neighbors by making local services simple, transparent, and reliable."></Text>
                 <div className="w-full gap-4 mt-5 flex items-center justify-center md:justify-normal">
                     <Button type="primary" btnText="Get Started" to="/browse-tasks"></Button>
-                    <Button type="terciary" btnText="Learn More"></Button>
+                    <Button type="terciary" btnText="Learn More" to="/about"></Button>
                 </div>
             </div>
             <div className="flex items-center justify-center flex-1">

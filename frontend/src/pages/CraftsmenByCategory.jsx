@@ -208,7 +208,7 @@ const CraftsmenByCategory = () => {
     filters.minRating !== 0 || filters.urgentOnly;
 
   useEffect(() => {
-    if (!config) { navigate('/browse-tasks'); return; }
+    if (!config) { navigate('/browse-tasks', { replace: true }); return; }
     const fetchCraftsmen = async () => {
       setLoading(true); setError(null);
       try {
@@ -276,7 +276,7 @@ const CraftsmenByCategory = () => {
       <div className="flex-1 px-4 sm:px-6 lg:px-8 py-10">
         <div className="max-w-7xl mx-auto">
 
-          <button onClick={() => navigate('/browse-tasks')} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
+          <button onClick={() => navigate('/browse-tasks', { replace: true })} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8 group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to categories
           </button>

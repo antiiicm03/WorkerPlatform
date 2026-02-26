@@ -12,7 +12,7 @@ export default function Summary() {
                     <Text type="subHeading" value="Start using Leno today to achieve your long term Goals"></Text>
                     <Text type="primary" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, corporis aperiam voluptatibus libero accusamus illo asperiores dolor rerum quibusdam optio!"></Text>
                     <div className="w-full mt-8">
-                        <Button type="primary" btnText="Learn More"></Button>
+                        <Button type="primary" btnText="Learn More" to="/about"></Button>
                     </div>
                 </div>
                 <div className="flex justify-center items-center md:flex-1">
@@ -24,7 +24,7 @@ export default function Summary() {
                     <Text type="subHeading" value="The Calendar feature helps you organize tasks"></Text>
                     <Text type="primary" value="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam, corporis aperiam voluptatibus libero accusamus illo asperiores dolor rerum quibusdam optio! Lorem ipsum dolor sit amet consectetur adipisicing."></Text>
                     <div className="w-full mt-8">
-                        <Button type="primary" btnText="Learn More"></Button>
+                        <Button type="primary" btnText="Learn More" to="/about"></Button>
                     </div>
                 </div>
                 <div className="flex justify-center items-center md:flex-1">

@@ -1,5 +1,5 @@
 import majstorijaLogoMain from "../assets/majstorijaLogoMain.png";
-
+import { Link } from 'react-router-dom';
 export default function Footer() {
     return (
         <footer className="bg-[#121418] text-white py-12">
@@ -17,15 +17,14 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">Brzi Linkovi</h3>
-                        <ul className="space-y-2">
-                            <li><a href="#" className="text-gray-400 hover:text-white transition">O Nama</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white transition">Za Korisnike</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white transition">Za Majstore</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white transition">Kontakt</a></li>
-                        </ul>
+                    <h3 className="font-semibold text-lg mb-4">Brzi Linkovi</h3>
+                    <ul className="space-y-2">
+                        <li><Link to="/about" className="text-gray-400 hover:text-white transition">O Nama</Link></li>
+                        <li><Link to="/dashboard" className="text-gray-400 hover:text-white transition">Za Korisnike</Link></li>
+                        <li><Link to="/dashboard" className="text-gray-400 hover:text-white transition">Za Majstore</Link></li>
+                         <li><Link to="/contact" className="text-gray-400 hover:text-white transition">Kontakt</Link></li>
+                    </ul>
                     </div>
-
                     {/* Support */}
                     <div>
                         <h3 className="font-semibold text-lg mb-4">Podrška</h3>
